@@ -1,0 +1,70 @@
+/* design-system/tokens/typography.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap'); /* Exemplo: Importando uma fonte legível */
+
+:root {
+  /* Família de Fontes */
+  --font-family-base: 'Inter', sans-serif;
+  --font-family-heading: 'Inter', sans-serif; /* Pode ser a mesma ou outra */
+
+  /* Tamanhos de Fonte (Escala Tipográfica) */
+  --font-size-xs: 0.75rem;  /* 12px */
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-base: 1rem;   /* 16px (padrão do navegador) */
+  --font-size-md: 1.125rem; /* 18px */
+  --font-size-lg: 1.25rem;  /* 20px */
+  --font-size-xl: 1.5rem;   /* 24px */
+  --font-size-xxl: 2rem;    /* 32px */
+  --font-size-xxxl: 2.5rem; /* 40px */
+
+  /* Pesos de Fonte */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  /* Alturas de Linha */
+  --line-height-base: 1.5; /* Recomendado para boa legibilidade */
+  --line-height-heading: 1.2;
+}
+
+/* Aplicações básicas */
+body {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  color: var(--text-color-primary); /* Definido em colors.css */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-heading);
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+h1 { font-size: var(--font-size-xxxl); }
+h2 { font-size: var(--font-size-xxl); }
+h3 { font-size: var(--font-size-xl); }
+h4 { font-size: var(--font-size-lg); }
+h5 { font-size: var(--font-size-md); }
+h6 { font-size: var(--font-size-base); }
+
+p {
+  margin-bottom: 1em;
+}
+
+a {
+  color: var(--text-color-link);
+  text-decoration: underline;
+}
+
+a:hover, a:focus {
+  text-decoration: none; /* Ou outra indicação visual */
+}
+
+/* Classe utilitária para texto grande (exemplo) */
+.text-large {
+    font-size: var(--font-size-lg);
+}

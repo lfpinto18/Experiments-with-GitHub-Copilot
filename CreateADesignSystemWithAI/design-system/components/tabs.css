@@ -1,0 +1,178 @@
+/* === Tabs Component === */
+
+.tabs {
+    /* Container for the whole tabs component */
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.tab-list {
+    display: flex;
+    border-bottom: 2px solid var(--color-neutral-light-gray);
+    margin-bottom: var(--spacing-medium);
+    padding-left: 0; /* Remove default list padding if using ul */
+    list-style: none; /* Remove default list style if using ul */
+    flex-wrap: wrap; /* Allow tabs to wrap on smaller screens */
+    gap: 2px; /* Small gap between wrapped tabs */
+    position: relative; /* For focus indicator positioning */
+}
+
+.tab-list[aria-orientation="vertical"] {
+    flex-direction: column;
+    border-bottom: none;
+    border-right: 2px solid var(--color-neutral-light-gray);
+    margin-bottom: 0;
+    margin-right: var(--spacing-medium);
+}
+
+.tab-item {
+    padding: var(--spacing-small) var(--spacing-medium);
+    margin-bottom: -2px; /* Overlap the border-bottom of tab-list */
+    border: 2px solid transparent;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    background-color: transparent;
+    color: var(--color-neutral-gray); /* Inactive tab color */
+    cursor: pointer;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    transition: color 0.15s ease-in-out, border-color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+    /* Accessibility improvements */
+    min-height: 44px; /* Proper touch target size */
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+/* Handle vertical tabs differently */
+.tab-list[aria-orientation="vertical"] .tab-item {
+    margin-bottom: 0; /* Reset */
+    margin-right: -2px; /* Overlap the border-right of tab-list */
+    border-radius: 4px 0 0 4px; /* Round left corners only */
+}
+
+.tab-item:hover,
+.tab-item:focus {
+    color: var(--text-color-primary); /* Hover/focus color */
+    border-bottom-color: var(--color-neutral-gray); /* Subtle indicator on hover/focus */
+    background-color: rgba(0, 0, 0, 0.02); /* Very subtle background */
+}
+
+/* Enhanced keyboard focus indicator for accessibility */
+.tab-item:focus-visible {
+    outline: 3px solid var(--color-feedback-info, #0277BD);
+    outline-offset: -3px;
+    position: relative;
+    z-index: 2; /* Ensure focus indicator appears above other elements */
+    box-shadow: none;
+}
+
+/* For browsers that don't support :focus-visible */
+.tab-item:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* Target all browsers - fallback */
+@supports not selector(:focus-visible) {
+    .tab-item:focus {
+        outline: 3px solid var(--color-feedback-info, #0277BD);
+        outline-offset: -3px;
+    }
+}
+
+/* Active tab state (set via JS and aria-selected) */
+.tab-item[aria-selected="true"] {
+    color: var(--text-color-primary); /* Active tab text color */
+    border-color: var(--color-neutral-light-gray) var(--color-neutral-light-gray) var(--color-neutral-white);
+    border-bottom-color: var(--color-neutral-white); /* Hide bottom border by matching background */
+    background-color: var(--color-neutral-white); /* Match panel background */
+    font-weight: var(--font-weight-bold, 700); /* Make active tab more prominent */
+    z-index: 1; /* Ensure the active tab appears above the tab-list border */
+}
+
+/* Active tab in vertical orientation */
+.tab-list[aria-orientation="vertical"] .tab-item[aria-selected="true"] {
+    border-color: var(--color-neutral-light-gray) var(--color-neutral-white) var(--color-neutral-light-gray) var(--color-neutral-light-gray);
+    border-right-color: var(--color-neutral-white);
+}
+
+.tab-panel {
+    padding: var(--spacing-medium);
+    color: var(--text-color-primary);
+    border-radius: 0 0 4px 4px;
+    min-height: 150px; /* Prevent layout shifts when switching between tabs with different content heights */
+}
+
+/* Vertical layout - panel styling */
+.tabs[data-orientation="vertical"] {
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.tabs[data-orientation="vertical"] .tab-panel {
+    border-radius: 0 4px 4px 0;
+}
+
+/* Hide inactive panels (managed by JS using 'hidden' attribute) */
+.tab-panel[hidden] {
+    display: none;
+}
+
+/* If a panel can receive focus (e.g., if it has interactive elements) */
+.tab-panel:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-feedback-info, #0277BD);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .tab-item {
+        transition: none;
+    }
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+    .tab-item {
+        border: 1px solid transparent;
+    }
+    
+    .tab-item[aria-selected="true"] {
+        border: 1px solid ButtonText;
+        font-weight: bold;
+    }
+    
+    .tab-item:focus-visible {
+        outline: 2px solid ButtonText;
+        outline-offset: -2px;
+    }
+    
+    .tab-panel {
+        border: 1px solid ButtonText;
+    }
+}
+
+/* Responsive design adjustments */
+@media (max-width: 600px) {
+    .tab-list {
+        overflow-x: auto; /* Allow horizontal scrolling on small screens */
+        flex-wrap: nowrap; /* Prevent wrapping on very small screens */
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+        scrollbar-width: thin; /* Firefox */
+    }
+    
+    /* Hide scrollbar in WebKit browsers */
+    .tab-list::-webkit-scrollbar {
+        height: 4px;
+    }
+    
+    .tab-list::-webkit-scrollbar-thumb {
+        background-color: var(--color-neutral-gray);
+        border-radius: 4px;
+    }
+    
+    .tab-list::-webkit-scrollbar-track {
+        background-color: var(--color-neutral-light-gray);
+    }
+}

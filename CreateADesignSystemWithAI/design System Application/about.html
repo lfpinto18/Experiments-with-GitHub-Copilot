@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Nós - Cream Design System</title>
+    <!-- Importa Design System Tokens -->
+    <link rel="stylesheet" href="../design-system/tokens/colors.css">
+    <link rel="stylesheet" href="../design-system/tokens/typography.css">
+    <!-- Importa Design System Components -->
+    <link rel="stylesheet" href="../design-system/components/button.css">
+    <link rel="stylesheet" href="../design-system/components/card.css">
+    <link rel="stylesheet" href="../design-system/components/modal.css">
+    <link rel="stylesheet" href="../design-system/components/tabs.css">
+    <link rel="stylesheet" href="../design-system/components/dropdown.css">
+    <!-- Estilos básicos para layout -->
+    <style>
+        body { 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
+            margin: 0; 
+            font-family: var(--font-family-base, sans-serif);
+            background-color: var(--color-neutral-off-white, #f8f9fa);
+        }
+        .container { 
+            max-width: 1140px; 
+            margin: 2rem auto; 
+            padding: 0 1rem; 
+            flex-grow: 1; 
+        }
+        header {
+            background-color: var(--color-primary, #007bff);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: var(--font-size-xxl, 1.75rem);
+            font-weight: var(--font-weight-bold, 700);
+            color: white;
+            text-decoration: none;
+        }
+        
+        nav {
+            background-color: var(--color-neutral-white, #fff);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        nav .container {
+            margin: 0 auto;
+            padding: 0;
+        }
+        
+        nav ul { 
+            list-style: none; 
+            padding: 0; 
+            margin: 0; 
+            display: flex; 
+            gap: 1.5rem; 
+            padding: 1rem 0; 
+        }
+        
+        nav a { 
+            text-decoration: none; 
+            color: var(--text-color-primary); 
+            font-weight: var(--font-weight-medium, 500);
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s ease;
+        }
+        
+        nav a:hover, nav a.active { 
+            border-bottom-color: var(--color-primary, #007bff);
+            color: var(--color-primary, #007bff);
+        }
+        
+        footer { 
+            text-align: center; 
+            padding: 2rem; 
+            background-color: var(--color-neutral-gray); 
+            color: var(--text-color-on-dark); 
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-color-on-dark);
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .hero {
+            background-color: var(--color-primary-light, #cfe2ff);
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .team-member img {
+            max-width: 100%;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title {
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--color-neutral-light-gray);
+            color: var(--text-color-primary);
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: var(--color-primary-light);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+        
+        .timeline-container {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+        
+        .timeline-container.left {
+            left: 0;
+        }
+        
+        .timeline-container.right {
+            left: 50%;
+        }
+        
+        .timeline-content {
+            padding: 20px 30px;
+            background-color: white;
+            position: relative;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .timeline-container.left .timeline-content::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -17px;
+            background-color: white;
+            border: 4px solid var(--color-primary);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .timeline-container.right .timeline-content::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            left: -17px;
+            background-color: white;
+            border: 4px solid var(--color-primary);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        /* Add proper text-center class styling */
+        .text-center {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem auto;
+            max-width: 100%;
+            flex-wrap: wrap;
+        }
+        
+        @media screen and (max-width: 600px) {
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-container {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-container.right {
+                left: 0%;
+            }
+            
+            .timeline-container.left .timeline-content::after,
+            .timeline-container.right .timeline-content::after {
+                left: -16px;
+            }
+            
+            .text-center {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Dropdown menu styles */
+        .dropdown-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            z-index: 1000;
+            min-width: 180px;
+            padding: 0.5rem 0;
+            margin: 0.25rem 0 0;
+            background-color: var(--color-neutral-white, #fff);
+            border: 1px solid var(--color-neutral-light-gray, #e9ecef);
+            border-radius: 4px;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+        
+        .dropdown-menu a {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: var(--text-color-primary, #212529);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        
+        .dropdown-menu a:hover {
+            background-color: var(--color-neutral-light-gray, #f8f9fa);
+        }
+        
+        .dropdown-menu.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="index.html" class="logo">Cream Design System</a>
+            <div class="dropdown-wrapper">
+                <button class="btn btn-outline" id="toggle-menu" aria-haspopup="true" aria-expanded="false" aria-controls="docs-menu">Documentação ▼</button>
+                <div class="dropdown-menu" id="docs-menu" role="menu" aria-labelledby="toggle-menu">
+                    <a href="../design-system/docs/index.html" role="menuitem">Guia de Uso</a>
+                    <a href="#" id="components-link" role="menuitem">Componentes</a>
+                    <a href="#" id="tokens-link" role="menuitem">Tokens</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="index.html" aria-label="Página Principal">Home</a></li>
+                <li><a href="about.html" class="active" aria-label="Sobre Nós">Sobre</a></li>
+                <li><a href="contact.html" aria-label="Página de Contato">Contato</a></li>
+                <li><a href="services.html" aria-label="Nossos Serviços">Serviços</a></li>
+                <li><a href="portfolio.html" aria-label="Nosso Portfólio">Portfólio</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Nossa História</h1>
+            <p>Conheça a equipe por trás do Cream Design System e como evoluímos para entregar a melhor experiência para desenvolvedores e usuários.</p>
+        </div>
+    </section>
+
+    <main class="container">
+        <div class="tabs">
+            <div class="tab-list" role="tablist">
+                <button id="tab1" class="tab-item" role="tab" aria-selected="true" aria-controls="panel1">Nossa Equipe</button>
+                <button id="tab2" class="tab-item" role="tab" aria-selected="false" aria-controls="panel2">História</button>
+                <button id="tab3" class="tab-item" role="tab" aria-selected="false" aria-controls="panel3">Missão & Valores</button>
+            </div>
+            
+            <div id="panel1" class="tab-panel" role="tabpanel" aria-labelledby="tab1">
+                <p>Somos uma equipe dedicada a criar experiências digitais incríveis utilizando o Cream Design System. Nossa equipe multidisciplinar reúne especialistas em design, desenvolvimento e acessibilidade.</p>
+                
+                <div class="team-grid">
+                    <div class="card team-member">
+                        <div class="card-body">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Ana Silva">
+                            <h2 class="card-title">Ana Silva</h2>
+                            <p>Fundadora & Designer de UX</p>
+                            <button class="btn btn-outline modal-trigger" data-modal="team-member-1">Ver Perfil</button>
+                        </div>
+                    </div>
+                    
+                    <div class="card team-member">
+                        <div class="card-body">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Carlos Mendes">
+                            <h2 class="card-title">Carlos Mendes</h2>
+                            <p>Desenvolvedor Frontend</p>
+                            <button class="btn btn-outline modal-trigger" data-modal="team-member-2">Ver Perfil</button>
+                        </div>
+                    </div>
+                    
+                    <div class="card team-member">
+                        <div class="card-body">
+                            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Júlia Castro">
+                            <h2 class="card-title">Júlia Castro</h2>
+                            <p>Especialista em Acessibilidade</p>
+                            <button class="btn btn-outline modal-trigger" data-modal="team-member-3">Ver Perfil</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="panel2" class="tab-panel" role="tabpanel" aria-labelledby="tab2" hidden>
+                <p>O Cream Design System nasceu da necessidade de padronizar nossas interfaces e acelerar o desenvolvimento de produtos digitais. Conheça nossa trajetória:</p>
+                
+                <div class="timeline">
+                    <div class="timeline-container left">
+                        <div class="timeline-content">
+                            <h2>2022</h2>
+                            <p>Início do projeto com foco em consistência visual e acessibilidade.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-container right">
+                        <div class="timeline-content">
+                            <h2>2023</h2>
+                            <p>Lançamento oficial do Cream Design System com os primeiros componentes.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-container left">
+                        <div class="timeline-content">
+                            <h2>2024</h2>
+                            <p>Expansão para múltiplas plataformas e integração com frameworks populares.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-container right">
+                        <div class="timeline-content">
+                            <h2>2025</h2>
+                            <p>Versão 2.0 com foco em customização e performance.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="panel3" class="tab-panel" role="tabpanel" aria-labelledby="tab3" hidden>
+                <h2>Nossa Missão</h2>
+                <p>Capacitar equipes a criar produtos digitais consistentes, acessíveis e de alta qualidade, reduzindo o tempo de desenvolvimento e melhorando a experiência do usuário.</p>
+                
+                <h2>Nossos Valores</h2>
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Consistência</h3>
+                            <p>Garantimos que todas as interfaces sigam os mesmos padrões visuais e comportamentais.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Acessibilidade</h3>
+                            <p>Nossos componentes são projetados para serem utilizados por todos, independentemente de suas capacidades.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Eficiência</h3>
+                            <p>Aceleramos o processo de desenvolvimento com componentes reutilizáveis e documentação clara.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <a href="index.html" class="btn btn-primary">Voltar para Home</a>
+            <a href="contact.html" class="btn btn-outline">Entre em Contato</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#" id="terms-link">Termos de Uso</a>
+            <a href="#" id="privacy-link">Política de Privacidade</a>
+            <a href="contact.html">Contato</a>
+            <a href="../design-system/docs/index.html">Documentação</a>
+        </div>
+        <p>&copy; 2025 Cream Design System</p>
+    </footer>
+
+    <!-- Modais de equipe -->
+    <div id="team-member-1" class="modal" role="dialog" aria-labelledby="modalTitle1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modalTitle1" class="modal-title">Ana Silva</h2>
+                    <button class="modal-close" aria-label="Fechar modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Ana Silva" style="width: 100px; border-radius: 50%; margin-bottom: 1rem;">
+                    <p>Fundadora e líder de UX, Ana tem mais de 10 anos de experiência em design de interfaces. Foi responsável pela concepção inicial do Cream Design System.</p>
+                    <p>Formada em Design pela UFRJ, com especialização em UX/UI pela UXDI.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline modal-close">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="team-member-2" class="modal" role="dialog" aria-labelledby="modalTitle2" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modalTitle2" class="modal-title">Carlos Mendes</h2>
+                    <button class="modal-close" aria-label="Fechar modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Carlos Mendes" style="width: 100px; border-radius: 50%; margin-bottom: 1rem;">
+                    <p>Desenvolvedor frontend com expertise em JavaScript, React e CSS. Carlos é responsável pela implementação técnica dos componentes do design system.</p>
+                    <p>Bacharel em Ciência da Computação pela USP.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline modal-close">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="team-member-3" class="modal" role="dialog" aria-labelledby="modalTitle3" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modalTitle3" class="modal-title">Júlia Castro</h2>
+                    <button class="modal-close" aria-label="Fechar modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Júlia Castro" style="width: 100px; border-radius: 50%; margin-bottom: 1rem;">
+                    <p>Especialista em acessibilidade digital, Júlia garante que todos os componentes do Cream Design System sigam as diretrizes WCAG e sejam utilizáveis por todos.</p>
+                    <p>Certificada em CPACC (Certified Professional in Accessibility Core Competencies).</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline modal-close">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modais de páginas em desenvolvimento -->
+    <div id="coming-soon-modal" class="modal" role="dialog" aria-labelledby="comingSoonTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="comingSoonTitle" class="modal-title">Em Desenvolvimento</h2>
+                    <button class="modal-close" aria-label="Fechar modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <p>Esta página está em desenvolvimento e será disponibilizada em breve.</p>
+                    <p>Fique atento às nossas atualizações!</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline modal-close">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript para interatividade -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab functionality
+            const tabs = document.querySelectorAll('.tab-item');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Hide all panels
+                    document.querySelectorAll('.tab-panel').forEach(panel => {
+                        panel.hidden = true;
+                    });
+                    
+                    // Deselect all tabs
+                    tabs.forEach(t => {
+                        t.setAttribute('aria-selected', 'false');
+                    });
+                    
+                    // Select clicked tab
+                    this.setAttribute('aria-selected', 'true');
+                    
+                    // Show corresponding panel
+                    const panelId = this.getAttribute('aria-controls');
+                    document.getElementById(panelId).hidden = false;
+                });
+            });
+            
+            // Modal functionality for team members
+            const modalTriggers = document.querySelectorAll('.modal-trigger');
+            
+            modalTriggers.forEach(trigger => {
+                trigger.addEventListener('click', function() {
+                    const modalId = this.getAttribute('data-modal');
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        modal.classList.add('show');
+                    }
+                });
+            });
+            
+            // Close modal
+            document.querySelectorAll('.modal-close').forEach(closeBtn => {
+                closeBtn.addEventListener('click', function() {
+                    const modal = this.closest('.modal');
+                    if (modal) {
+                        modal.classList.remove('show');
+                    }
+                });
+            });
+            
+            // Close modal when clicking outside
+            document.addEventListener('click', function(event) {
+                const modals = document.querySelectorAll('.modal.show');
+                modals.forEach(modal => {
+                    if (modal.contains(event.target)) return;
+                    if (!event.target.closest('.modal-content') && !event.target.classList.contains('modal-trigger')) {
+                        modal.classList.remove('show');
+                    }
+                });
+            });
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    const openModal = document.querySelector('.modal.show');
+                    if (openModal) {
+                        openModal.classList.remove('show');
+                    }
+                }
+            });
+            
+            // Toggle dropdown menu
+            const toggleMenuBtn = document.getElementById('toggle-menu');
+            const docsMenu = document.getElementById('docs-menu');
+            
+            if (toggleMenuBtn && docsMenu) {
+                toggleMenuBtn.addEventListener('click', function() {
+                    docsMenu.classList.toggle('show');
+                });
+                
+                // Close dropdown menu if clicked outside
+                window.addEventListener('click', function(event) {
+                    if (!event.target.matches('#toggle-menu')) {
+                        docsMenu.classList.remove('show');
+                    }
+                });
+            }
+            
+            // Dropdown functionality
+            const dropdownComponents = document.querySelectorAll('[data-component="dropdown"]');
+            
+            dropdownComponents.forEach(dropdown => {
+                const toggle = dropdown.querySelector('.dropdown-toggle');
+                const menu = dropdown.querySelector('.dropdown-menu');
+                const items = dropdown.querySelectorAll('.dropdown-item');
+                
+                if (!toggle || !menu) return;
+                
+                // Toggle dropdown menu visibility
+                toggle.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    
+                    const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+                    
+                    // Update ARIA attributes
+                    toggle.setAttribute('aria-expanded', !isExpanded);
+                    
+                    // Toggle menu visibility
+                    if (isExpanded) {
+                        menu.classList.remove('is-open');
+                    } else {
+                        menu.classList.add('is-open');
+                        // Focus the first menu item when opening
+                        if (items.length > 0) {
+                            items[0].focus();
+                        }
+                    }
+                });
+                
+                // Add keyboard navigation for menu items
+                items.forEach((item, index) => {
+                    item.addEventListener('keydown', function(event) {
+                        switch(event.key) {
+                            case 'ArrowDown':
+                                event.preventDefault();
+                                if (index < items.length - 1) {
+                                    items[index + 1].focus();
+                                }
+                                break;
+                            case 'ArrowUp':
+                                event.preventDefault();
+                                if (index > 0) {
+                                    items[index - 1].focus();
+                                } else {
+                                    toggle.focus();
+                                }
+                                break;
+                            case 'Escape':
+                                event.preventDefault();
+                                toggle.setAttribute('aria-expanded', 'false');
+                                menu.classList.remove('is-open');
+                                toggle.focus();
+                                break;
+                            case 'Tab':
+                                if (index === items.length - 1 && !event.shiftKey) {
+                                    toggle.setAttribute('aria-expanded', 'false');
+                                    menu.classList.remove('is-open');
+                                }
+                                break;
+                        }
+                    });
+                    
+                    // Close the dropdown when an item is clicked
+                    item.addEventListener('click', function() {
+                        toggle.setAttribute('aria-expanded', 'false');
+                        menu.classList.remove('is-open');
+                        toggle.focus(); // Return focus to the toggle button
+                    });
+                });
+                
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function(event) {
+                    if (!dropdown.contains(event.target)) {
+                        toggle.setAttribute('aria-expanded', 'false');
+                        menu.classList.remove('is-open');
+                    }
+                });
+                
+                // Close dropdown when pressing Escape key
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+                        toggle.setAttribute('aria-expanded', 'false');
+                        menu.classList.remove('is-open');
+                        toggle.focus();
+                    }
+                });
+            });
+            
+            // Links that trigger "coming soon" modal
+            const comingSoonLinks = [
+                document.getElementById('components-link'),
+                document.getElementById('tokens-link'),
+                document.getElementById('services-link'),
+                document.getElementById('portfolio-link'),
+                document.getElementById('terms-link'),
+                document.getElementById('privacy-link')
+            ];
+            
+            const comingSoonModal = document.getElementById('coming-soon-modal');
+            
+            comingSoonLinks.forEach(link => {
+                if (link) {
+                    link.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        comingSoonModal.classList.add('show');
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+/* design-system/tokens/colors.css */
+:root {
+  /* Palette Principal "Cream" */
+  --color-cream-light: #FFF8E1; /* Exemplo: Um creme bem claro */
+  --color-cream-base: #FFE0B2; /* Exemplo: Creme base */
+  --color-cream-dark: #FFCC80; /* Exemplo: Creme mais escuro */
+
+  /* Cores Neutras (com bom contraste) */
+  --color-neutral-white: #FFFFFF;
+  --color-neutral-light-gray: #F5F5F5; /* Cinza claro para fundos */
+  --color-neutral-gray: #757575;     /* Cinza médio para texto secundário */
+  --color-neutral-dark-gray: #424242; /* Cinza escuro para texto principal */
+  --color-neutral-black: #212121;
+
+  /* Cores de Feedback (Exemplos Acessíveis) */
+  --color-feedback-info: #0277BD;    /* Azul para informação */
+  --color-feedback-success: #2E7D32; /* Verde para sucesso */
+  --color-feedback-warning: #FF8F00; /* Âmbar para aviso */
+  --color-feedback-error: #C62828;   /* Vermelho para erro */
+
+  /* Cores de Texto */
+  --text-color-primary: var(--color-neutral-dark-gray);
+  --text-color-secondary: var(--color-neutral-gray);
+  --text-color-on-dark: var(--color-neutral-white); /* Para usar sobre fundos escuros */
+  --text-color-link: var(--color-feedback-info);
+
+  /* Cores de Fundo */
+  --background-color-page: var(--color-neutral-white);
+  --background-color-card: var(--color-neutral-light-gray);
+  --background-color-primary-button: var(--color-cream-dark);
+  --background-color-primary-button-hover: #FFA726; /* Exemplo: Variação do creme */
+}
+
+/* Exemplos de uso para garantir contraste (a serem aplicados nos componentes) */
+.text-primary-on-light {
+  color: var(--text-color-primary);
+  background-color: var(--background-color-page); /* Contraste OK */
+}
+
+.text-secondary-on-light {
+  color: var(--text-color-secondary);
+  background-color: var(--background-color-page); /* Contraste OK */
+}
+
+.button-primary {
+  background-color: var(--background-color-primary-button);
+  color: var(--text-color-primary); /* Verificar contraste! Pode precisar ser --text-color-on-dark */
+  /* Adicionar padding, border-radius, etc. */
+}

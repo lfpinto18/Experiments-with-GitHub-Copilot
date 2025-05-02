@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cream Design System - Showcase</title>
+    <!-- Importa Design System Tokens -->
+    <link rel="stylesheet" href="../design-system/tokens/colors.css">
+    <link rel="stylesheet" href="../design-system/tokens/typography.css">
+    <!-- Importa Design System Components -->
+    <link rel="stylesheet" href="../design-system/components/button.css">
+    <link rel="stylesheet" href="../design-system/components/card.css">
+    <link rel="stylesheet" href="../design-system/components/alert.css">
+    <link rel="stylesheet" href="../design-system/components/tabs.css">
+    <link rel="stylesheet" href="../design-system/components/dropdown.css">
+    <link rel="stylesheet" href="../design-system/components/modal.css">
+    <!-- Estilos básicos para layout (ampliados) -->
+    <style>
+        body { 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
+            margin: 0; 
+            font-family: var(--font-family-base, sans-serif);
+            background-color: var(--color-neutral-off-white, #f8f9fa);
+        }
+        
+        .container { 
+            max-width: 1140px; 
+            margin: 2rem auto; 
+            padding: 0 1rem; 
+            flex-grow: 1; 
+        }
+        
+        header {
+            background-color: var(--color-primary, #007bff);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: var(--font-size-xxl, 1.75rem);
+            font-weight: var(--font-weight-bold, 700);
+            color: white;
+            text-decoration: none;
+        }
+        
+        nav {
+            background-color: var(--color-neutral-white, #fff);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        nav .container {
+            margin: 0 auto;
+            padding: 0;
+        }
+        
+        nav ul { 
+            list-style: none; 
+            padding: 0; 
+            margin: 0; 
+            display: flex; 
+            gap: 1.5rem; 
+            padding: 1rem 0; 
+        }
+        
+        nav a { 
+            text-decoration: none; 
+            color: var(--text-color-primary); 
+            font-weight: var(--font-weight-medium, 500);
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s ease;
+        }
+        
+        nav a:hover, nav a.active { 
+            border-bottom-color: var(--color-primary, #007bff);
+            color: var(--color-primary, #007bff);
+        }
+        
+        .hero {
+            background-color: var(--color-primary-light, #cfe2ff);
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: var(--font-size-xxxl, 2.5rem);
+            margin-bottom: 1rem;
+            color: var(--text-color-primary);
+        }
+        
+        .hero p {
+            font-size: var(--font-size-lg, 1.25rem);
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: var(--text-color-secondary);
+        }
+        
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .section-title {
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--color-neutral-light-gray);
+            color: var(--text-color-primary);
+        }
+        
+        footer { 
+            text-align: center; 
+            padding: 2rem; 
+            background-color: var(--color-neutral-gray); 
+            color: var(--text-color-on-dark); 
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-color-on-dark);
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        /* JavaScript for interactions */
+        .modal-trigger {
+            cursor: pointer;
+        }
+        
+        /* Custom toggle for tabs */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            margin: 1rem 0;
+        }
+        
+        .toggle-label {
+            margin: 0 0.5rem;
+        }
+
+        /* Dropdown menu styles */
+        .dropdown-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            z-index: 1000;
+            min-width: 180px;
+            padding: 0.5rem 0;
+            margin: 0.25rem 0 0;
+            background-color: var(--color-neutral-white, #fff);
+            border: 1px solid var(--color-neutral-light-gray, #e9ecef);
+            border-radius: 4px;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+        
+        .dropdown-menu a {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: var(--text-color-primary, #212529);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        
+        .dropdown-menu a:hover {
+            background-color: var(--color-neutral-light-gray, #f8f9fa);
+        }
+        
+        .dropdown-menu.show {
+            display: block;
+        }
+        
+        /* Alert styling */
+        .alert {
+            position: relative;
+            padding-right: 2.5rem; /* Make space for the close button */
+        }
+        
+        .alert-close {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: 0 0.5rem;
+            color: inherit;
+            opacity: 0.7;
+        }
+        
+        .alert-close:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="index.html" class="logo">Cream Design System</a>
+            <div class="dropdown-wrapper">
+                <button class="btn btn-outline" id="toggle-menu">Documentação ▼</button>
+                <div class="dropdown-menu" id="docs-menu">
+                    <a href="../design-system/docs/index.html">Guia de Uso</a>
+                    <a href="#" id="components-link">Componentes</a>
+                    <a href="#" id="tokens-link">Tokens</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="index.html" class="active" aria-label="Página Principal">Home</a></li>
+                <li><a href="about.html" aria-label="Sobre Nós">Sobre</a></li>
+                <li><a href="contact.html" aria-label="Página de Contato">Contato</a></li>
+                <li><a href="services.html" aria-label="Nossos Serviços">Serviços</a></li>
+                <li><a href="portfolio.html" aria-label="Nosso Portfólio">Portfólio</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Bem-vindo ao Cream Design System</h1>
+            <p>Um sistema de design moderno e consistente para criar experiências digitais incríveis. Explore os componentes e veja como eles podem ser combinados para criar interfaces poderosas.</p>
+            <button class="btn btn-primary" id="start-now-btn">Começar Agora</button>
+            <button class="btn btn-outline" id="learn-more-btn">Saiba Mais</button>
+        </div>
+    </section>
+
+    <main class="container">
+        <!-- Card Grid -->
+        <h2 class="section-title">Conheça Nossos Recursos</h2>
+        
+        <div class="tabs">
+            <div class="tab-list" role="tablist">
+                <button id="tab1" class="tab-item" role="tab" aria-selected="true" aria-controls="panel1">Componentes</button>
+                <button id="tab2" class="tab-item" role="tab" aria-selected="false" aria-controls="panel2">Tokens</button>
+                <button id="tab3" class="tab-item" role="tab" aria-selected="false" aria-controls="panel3">Acessibilidade</button>
+            </div>
+            
+            <div id="panel1" class="tab-panel" role="tabpanel" aria-labelledby="tab1">
+                <p>Nossa biblioteca inclui componentes cuidadosamente projetados para criar interfaces modernas e consistentes.</p>
+                
+                <div class="toggle-container">
+                    <span class="toggle-label">Cards</span>
+                    <button class="btn btn-primary modal-trigger" data-modal="cardModal">Ver Exemplos</button>
+                </div>
+                
+                <div class="toggle-container">
+                    <span class="toggle-label">Botões</span>
+                    <button class="btn btn-primary modal-trigger" data-modal="buttonModal">Ver Exemplos</button>
+                </div>
+            </div>
+            
+            <div id="panel2" class="tab-panel" role="tabpanel" aria-labelledby="tab2" hidden>
+                <p>Nossos tokens de design garantem consistência visual em todas as plataformas e produtos.</p>
+                <h3>Tokens de Cor</h3>
+                <p>Paleta de cores primárias, secundárias, neutras e de feedback para criar hierarquia visual e comunicar estados.</p>
+                <h3>Tokens Tipográficos</h3>
+                <p>Sistema tipográfico escalável com tamanhos, pesos e espaçamentos de texto cuidadosamente definidos.</p>
+            </div>
+            
+            <div id="panel3" class="tab-panel" role="tabpanel" aria-labelledby="tab3" hidden>
+                <p>Nosso design system é construído com acessibilidade como prioridade, não como uma reflexão tardia.</p>
+                <ul>
+                    <li>Conformidade com WCAG 2.1 AA</li>
+                    <li>Suporte a navegação por teclado</li>
+                    <li>Contrastes de cores adequados</li>
+                    <li>Suporte a leitores de tela</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Card Grid -->
+        <h2 class="section-title">Exemplos de Componentes</h2>
+        <div class="card-grid">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Alertas</h3>
+                    <p>Exiba mensagens informativas, de sucesso, avisos ou erros para seus usuários.</p>
+                    <button class="btn btn-outline">Ver Detalhes</button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Botões</h3>
+                    <p>Botões estilizados para ações primárias, secundárias e terciárias.</p>
+                    <div style="display: flex; gap: 0.5rem; margin: 1rem 0;">
+                        <button class="btn btn-primary">Primário</button>
+                        <button class="btn btn-outline">Secundário</button>
+                    </div>
+                    <button class="btn btn-outline">Ver Detalhes</button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Abas</h3>
+                    <p>Organize conteúdo em abas para melhorar a experiência do usuário.</p>
+                    <button class="btn btn-outline">Ver Detalhes</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Example of modal component (HTML structure, will need JS to work) -->
+        <div id="exampleModal" class="modal" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 id="modalTitle" class="modal-title">Título do Modal</h2>
+                        <button class="modal-close" aria-label="Fechar modal">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Este é um exemplo de conteúdo dentro de um modal. Os modais são úteis para capturar a atenção do usuário para uma ação específica.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-outline modal-close">Cancelar</button>
+                        <button class="btn btn-primary">Confirmar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#" id="terms-link">Termos de Uso</a>
+            <a href="#" id="privacy-link">Política de Privacidade</a>
+            <a href="contact.html">Contato</a>
+            <a href="../design-system/docs/index.html">Documentação</a>
+        </div>
+        <p>&copy; 2025 Cream Design System</p>
+    </footer>
+
+    <!-- JavaScript para interatividade -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab functionality
+            const tabs = document.querySelectorAll('.tab-item');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Hide all panels
+                    document.querySelectorAll('.tab-panel').forEach(panel => {
+                        panel.hidden = true;
+                    });
+                    
+                    // Deselect all tabs
+                    tabs.forEach(t => {
+                        t.setAttribute('aria-selected', 'false');
+                    });
+                    
+                    // Select clicked tab
+                    this.setAttribute('aria-selected', 'true');
+                    
+                    // Show corresponding panel
+                    const panelId = this.getAttribute('aria-controls');
+                    document.getElementById(panelId).hidden = false;
+                });
+            });
+            
+            // Close alert functionality
+            document.querySelectorAll('.alert-close').forEach(button => {
+                button.addEventListener('click', function() {
+                    this.parentElement.style.display = 'none';
+                });
+            });
+            
+            // Toggle dropdown menu
+            const toggleMenuBtn = document.getElementById('toggle-menu');
+            const docsMenu = document.getElementById('docs-menu');
+            
+            if (toggleMenuBtn && docsMenu) {
+                toggleMenuBtn.addEventListener('click', function() {
+                    docsMenu.classList.toggle('show');
+                });
+                
+                // Close dropdown menu if clicked outside
+                window.addEventListener('click', function(event) {
+                    if (!event.target.matches('#toggle-menu')) {
+                        docsMenu.classList.remove('show');
+                    }
+                });
+            }
+            
+            // Modal functionality
+            const modalTriggers = document.querySelectorAll('.modal-trigger');
+            
+            modalTriggers.forEach(trigger => {
+                trigger.addEventListener('click', function() {
+                    const modalId = this.getAttribute('data-modal');
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        modal.classList.add('show');
+                    } else {
+                        // If modal doesn't exist, try creating/showing the generic example modal
+                        const componentName = this.previousElementSibling?.textContent || 'Componente';
+                        showExampleModal(componentName);
+                    }
+                });
+            });
+            
+            // Close modal
+            document.querySelectorAll('.modal-close').forEach(closeBtn => {
+                closeBtn.addEventListener('click', function() {
+                    const modal = this.closest('.modal');
+                    if (modal) {
+                        modal.classList.remove('show');
+                    }
+                });
+            });
+            
+            // Close modal when clicking outside
+            document.addEventListener('click', function(event) {
+                const modals = document.querySelectorAll('.modal.show');
+                modals.forEach(modal => {
+                    // Check if the click is outside the modal content and not on a trigger
+                    if (!modal.querySelector('.modal-content').contains(event.target) && !event.target.classList.contains('modal-trigger')) {
+                         modal.classList.remove('show');
+                    }
+                });
+            });
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    const openModal = document.querySelector('.modal.show');
+                    if (openModal) {
+                        openModal.classList.remove('show');
+                    }
+                }
+            });
+            
+            // Hero buttons functionality
+            const startNowBtn = document.getElementById('start-now-btn');
+            if (startNowBtn) {
+                 startNowBtn.addEventListener('click', function() {
+                     window.location.href = '../design-system/docs/index.html'; // Link to documentation
+                 });
+            }
+            
+            const learnMoreBtn = document.getElementById('learn-more-btn');
+            if (learnMoreBtn) {
+                 learnMoreBtn.addEventListener('click', function() {
+                     window.location.href = 'about.html'; // Link to About page
+                 });
+            }
+
+            // Function to show example modal (simplified)
+            function showExampleModal(componentName) {
+                const modal = document.getElementById('exampleModal');
+                if (!modal) return; // Ensure the example modal exists
+
+                const modalTitleElement = modal.querySelector('.modal-title');
+                const modalBodyElement = modal.querySelector('.modal-body');
+                
+                if(modalTitleElement) modalTitleElement.textContent = `Exemplo de ${componentName}`;
+                if(modalBodyElement) modalBodyElement.innerHTML = `<p>Exemplo de código para ${componentName} seria mostrado aqui.</p>`; // Placeholder content
+                
+                modal.classList.add('show');
+            }
+            
+            // Links that trigger "coming soon" modal (Update this list as needed)
+            const comingSoonLinks = [
+                document.getElementById('components-link'),
+                document.getElementById('tokens-link'),
+                document.getElementById('terms-link'), // Assuming footer links are still WIP
+                document.getElementById('privacy-link') // Assuming footer links are still WIP
+            ];
+            
+            const comingSoonModal = document.getElementById('coming-soon-modal'); // Assuming this modal exists in index.html
+            
+            if (comingSoonModal) {
+                comingSoonLinks.forEach(link => {
+                    if (link) {
+                        link.addEventListener('click', function(event) {
+                            event.preventDefault();
+                            comingSoonModal.classList.add('show');
+                        });
+                    }
+                });
+            } else {
+                console.warn('Coming soon modal not found.');
+            }
+
+            // Create modals for components described in data-modal attributes if they don't exist
+            // (Keeping the existing logic, assuming it's needed for dynamic examples)
+            const componentModals = {
+                 'cardModal': { title: 'Componente de Card', content: '<pre><code>&lt;div class=\"card\"&gt;...&lt;/div&gt;</code></pre>' },
+                 'buttonModal': { title: 'Componente de Botão', content: '<pre><code>&lt;button class=\"btn\"&gt;...&lt;/button&gt;</code></pre>' },
+                 'alertModal': { title: 'Componente de Alerta', content: '<pre><code>&lt;div class=\"alert\"&gt;...&lt;/div&gt;</code></pre>' }
+            };
+            
+            document.querySelectorAll('[data-modal]').forEach(trigger => {
+                 const modalId = trigger.getAttribute('data-modal');
+                 if (document.getElementById(modalId)) return; // Skip if modal already exists
+                 
+                 const modalData = componentModals[modalId];
+                 if (!modalData) return; // Skip if no data defined for this modal
+                 
+                 // Create modal HTML structure (simplified)
+                 const modalHTML = `
+                 <div id=\"${modalId}\" class=\"modal\" role=\"dialog\" aria-labelledby=\"${modalId}Title\" aria-hidden=\"true\">
+                     <div class=\"modal-dialog\">
+                         <div class=\"modal-content\">
+                             <div class=\"modal-header\">
+                                 <h2 id=\"${modalId}Title\" class=\"modal-title\">${modalData.title}</h2>
+                                 <button class=\"modal-close\" aria-label=\"Fechar modal\">×</button>
+                             </div>
+                             <div class=\"modal-body\">
+                                 ${modalData.content}
+                             </div>
+                             <div class=\"modal-footer\">
+                                 <button class=\"btn btn-outline modal-close\">Fechar</button>
+                             </div>
+                         </div>
+                     </div>
+                 </div>`;
+
+                 document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+                 // Re-add close listener for the newly created modal's close button
+                 const newModal = document.getElementById(modalId);
+                 newModal.querySelectorAll('.modal-close').forEach(closeBtn => {
+                    closeBtn.addEventListener('click', function() {
+                        newModal.classList.remove('show');
+                    });
+                 });
+            });
+
+        });
+    </script>
+</body>
+</html>

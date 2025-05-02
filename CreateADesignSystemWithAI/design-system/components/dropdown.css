@@ -1,0 +1,188 @@
+/* === Dropdown Component === */
+
+.dropdown {
+    position: relative; /* Needed for absolute positioning of the menu */
+    display: inline-block; /* Or block, depending on layout needs */
+}
+
+.dropdown-toggle {
+    /* Inherits .btn styles, add specifics if needed */
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    text-align: left;
+    padding-right: 2rem; /* Space for caret */
+}
+
+/* Add a visual caret to indicate dropdown functionality */
+.dropdown-toggle::after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    right: 0.75rem;
+    width: 0.5em;
+    height: 0.5em;
+    margin-left: 0.5em;
+    border-bottom: 1px solid currentColor;
+    border-right: 1px solid currentColor;
+    transform: rotate(45deg) translateY(-50%);
+}
+
+/* Rotate caret when menu is open */
+.dropdown-toggle[aria-expanded="true"]::after {
+    transform: rotate(-135deg) translateY(-50%);
+}
+
+.dropdown-menu {
+    display: none; /* Hidden by default */
+    position: absolute;
+    z-index: 1000; /* Ensure it's above other content */
+    top: 100%; /* Position below the toggle button */
+    left: 0;
+    min-width: 160px; /* Minimum width */
+    padding: var(--spacing-small) 0; /* Vertical padding */
+    margin: 2px 0 0; /* Small gap from toggle */
+    list-style: none;
+    background-color: var(--color-neutral-white);
+    border: 1px solid var(--color-neutral-light-gray);
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: var(--text-color-primary);
+    /* Improved accessibility */
+    max-height: 70vh; /* Limit height for long lists */
+    overflow-y: auto; /* Allow scrolling for long lists */
+}
+
+/* State when dropdown menu is open (add via JS) */
+.dropdown-menu.is-open {
+    display: block;
+}
+
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: var(--spacing-small) var(--spacing-medium);
+    clear: both;
+    font-weight: normal;
+    color: var(--text-color-primary);
+    text-align: left; /* Explicitly set left alignment for consistent appearance */
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    /* Enhanced accessibility */
+    min-height: 44px; /* Proper touch target size */
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+    color: var(--text-color-primary); /* Adjust if needed */
+    background-color: var(--color-neutral-light-gray); /* Hover/focus background */
+    text-decoration: none;
+}
+
+/* Add a visible focus state for accessibility */
+.dropdown-item:focus-visible {
+    outline: 3px solid var(--color-feedback-info, #0277BD); /* Consistent with button focus */
+    outline-offset: -3px; /* Keep outline inside the item */
+    position: relative;
+    z-index: 1;
+    box-shadow: none; /* Remove any potentially obscuring shadows */
+}
+
+/* For browsers without :focus-visible support */
+.dropdown-item:focus:not(:focus-visible) {
+    outline: none;
+    background-color: var(--color-neutral-light-gray);
+}
+
+.dropdown-item:disabled,
+.dropdown-item[aria-disabled="true"] {
+    color: var(--color-neutral-gray);
+    pointer-events: none;
+    background-color: transparent;
+    opacity: 0.65;
+}
+
+.dropdown-divider {
+    height: 0;
+    margin: var(--spacing-small) 0;
+    overflow: hidden;
+    border-top: 1px solid var(--color-neutral-light-gray);
+}
+
+/* Selected item styling */
+.dropdown-item[aria-selected="true"] {
+    background-color: rgba(2, 119, 189, 0.1); /* Light highlight */
+    font-weight: var(--font-weight-medium, 500); /* Slightly heavier font */
+}
+
+.dropdown-item[aria-selected="true"]::before {
+    content: '✓'; /* Checkmark */
+    display: inline-block;
+    margin-right: 0.5rem;
+    color: var(--color-feedback-info);
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+    .dropdown-toggle::after {
+        border-color: ButtonText;
+    }
+    
+    .dropdown-menu {
+        border: 1px solid ButtonText;
+    }
+    
+    .dropdown-item:focus {
+        outline: 2px solid ButtonText;
+        outline-offset: -2px;
+    }
+    
+    .dropdown-item[aria-selected="true"] {
+        border: 1px dashed ButtonText;
+    }
+}
+
+/* Position variants */
+.dropdown-menu-right {
+    right: 0;
+    left: auto;
+}
+
+.dropdown-menu-top {
+    bottom: 100%;
+    top: auto;
+    margin: 0 0 2px 0; /* Gap above toggle */
+}
+
+/* Prevent issues when zooming */
+@media screen and (max-width: 480px) {
+    .dropdown-menu {
+        min-width: 100%; /* Match toggle width on small screens */
+    }
+}
+
+/* Alignment helpers for dropdown content */
+.dropdown-menu-centered .dropdown-item {
+    justify-content: center;
+    text-align: center;
+}
+
+.dropdown-menu-right-aligned .dropdown-item {
+    justify-content: flex-end;
+    text-align: right;
+}
+
+/* Text alignment for dropdown toggle */
+.dropdown-toggle.text-center {
+    text-align: center;
+    justify-content: center;
+}
+
+.dropdown-toggle.text-right {
+    text-align: right;
+    justify-content: flex-end;
+}

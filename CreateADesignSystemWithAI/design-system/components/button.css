@@ -1,0 +1,120 @@
+/* design-system/components/button.css */
+
+.btn {
+  display: inline-block; /* Allows setting padding/margin */
+  padding: 0.75rem 1.5rem; /* Vertical and horizontal padding */
+  border: 1px solid transparent; /* Default border */
+  border-radius: 4px; /* Slightly rounded corners */
+  font-family: var(--font-family-base, sans-serif);
+  font-size: var(--font-size-base, 1rem);
+  font-weight: var(--font-weight-medium, 500);
+  line-height: var(--line-height-base, 1.5);
+  text-align: center;
+  text-decoration: none; /* Remove underline for link-styled buttons */
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Improved touch target size for mobile/tablet accessibility */
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Primary Button Style */
+.btn-primary {
+  background-color: var(--background-color-primary-button, #FFCC80); /* Use token */
+  color: var(--text-color-primary, #424242); /* Use token - CHECK CONTRAST! */
+  border-color: var(--background-color-primary-button, #FFCC80);
+}
+
+/* Secondary Button Style with improved accessibility */
+.btn-secondary {
+  background-color: transparent;
+  color: var(--text-color-primary, #424242);
+  border-color: var(--text-color-primary, #424242);
+}
+
+/* Hover and Focus States for Accessibility */
+.btn-primary:hover {
+  background-color: var(--background-color-primary-button-hover, #FFA726); /* Use token */
+  border-color: var(--background-color-primary-button-hover, #FFA726);
+  color: var(--text-color-primary, #424242); /* Ensure contrast remains ok */
+}
+
+.btn-secondary:hover {
+  background-color: rgba(66, 66, 66, 0.1);
+  color: var(--text-color-primary, #424242);
+}
+
+/* Enhanced focus states for better visibility */
+.btn:focus-visible {
+  outline: 3px solid var(--color-feedback-info, #0277BD); /* High contrast outline */
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(2, 119, 189, 0.4); /* Secondary visual indicator */
+  position: relative; /* For z-index if needed */
+  z-index: 1; /* Ensure the focus outline is visible */
+}
+
+/* Target all browsers - fallback */
+.btn:focus:not(:focus-visible) {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(2, 119, 189, 0.4);
+}
+
+/* Active State */
+.btn-primary:active {
+  /* Slightly darker or different style when clicked */
+  background-color: #FB8C00; /* Example: Darker shade */
+  border-color: #FB8C00;
+}
+
+.btn-secondary:active {
+  background-color: rgba(66, 66, 66, 0.2);
+}
+
+/* Disabled State */
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.65;
+  cursor: not-allowed;
+  box-shadow: none;
+  /* Improved disabled state with better contrast */
+  background-color: #f1f1f1; 
+  color: #767676; /* Meets 3:1 contrast ratio against #f1f1f1 */
+  border-color: #d6d6d6;
+}
+
+/* Icon button - needs accessible label */
+.btn-icon {
+  padding: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Small size variant */
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  /* Still maintain min-height for touch target */
+  min-height: 44px;
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+  .btn {
+    border: 1px solid ButtonText;
+  }
+  .btn:focus {
+    outline: 2px solid ButtonText;
+  }
+}
+
+/* Accessibility Note:
+   - Ensures proper contrast with WCAG 2.1 AA standard (4.5:1 for normal text)
+   - Focus states are highly visible for keyboard navigation
+   - Touch targets are at least 44x44px for mobile accessibility
+   - Support for Windows High Contrast Mode
+   - When using <a> as buttons, add role="button" and tabindex="0"
+   - Make sure to include aria-disabled="true" with disabled attribute
+*/

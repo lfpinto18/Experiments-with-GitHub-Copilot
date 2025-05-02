@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólio - Cream Design System</title>
+    <!-- Importa Design System Tokens -->
+    <link rel="stylesheet" href="../design-system/tokens/colors.css">
+    <link rel="stylesheet" href="../design-system/tokens/typography.css">
+    <!-- Importa Design System Components -->
+    <link rel="stylesheet" href="../design-system/components/button.css">
+    <link rel="stylesheet" href="../design-system/components/card.css">
+    <link rel="stylesheet" href="../design-system/components/modal.css">
+    <link rel="stylesheet" href="../design-system/components/tabs.css">
+    <link rel="stylesheet" href="../design-system/components/alert.css">
+    <!-- Estilos básicos para layout -->
+    <style>
+        body { 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
+            margin: 0; 
+            font-family: var(--font-family-base, sans-serif);
+            background-color: var(--color-neutral-off-white, #f8f9fa);
+        }
+        .container { 
+            max-width: 1140px; 
+            margin: 2rem auto; 
+            padding: 0 1rem; 
+            flex-grow: 1; 
+        }
+        header {
+            background-color: var(--color-primary, #007bff);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: var(--font-size-xxl, 1.75rem);
+            font-weight: var(--font-weight-bold, 700);
+            color: white;
+            text-decoration: none;
+        }
+        
+        nav {
+            background-color: var(--color-neutral-white, #fff);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        nav .container {
+            margin: 0 auto;
+            padding: 0;
+        }
+        
+        nav ul { 
+            list-style: none; 
+            padding: 0; 
+            margin: 0; 
+            display: flex; 
+            gap: 1.5rem; 
+            padding: 1rem 0; 
+        }
+        
+        nav a { 
+            text-decoration: none; 
+            color: var(--text-color-primary); 
+            font-weight: var(--font-weight-medium, 500);
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s ease;
+        }
+        
+        nav a:hover, nav a.active { 
+            border-bottom-color: var(--color-primary, #007bff);
+            color: var(--color-primary, #007bff);
+        }
+        
+        footer { 
+            text-align: center; 
+            padding: 2rem; 
+            background-color: var(--color-neutral-gray); 
+            color: var(--text-color-on-dark); 
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-color-on-dark);
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .hero {
+            background-color: var(--color-primary-light, #cfe2ff);
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: var(--font-size-xxxl, 2.5rem);
+            margin-bottom: 1rem;
+            color: var(--text-color-primary);
+        }
+        
+        .hero p {
+            font-size: var(--font-size-lg, 1.25rem);
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: var(--text-color-secondary);
+        }
+        
+        .section-title {
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--color-neutral-light-gray);
+            color: var(--text-color-primary);
+        }
+        
+        /* Dropdown menu styles */
+        .dropdown-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            z-index: 1000;
+            min-width: 180px;
+            padding: 0.5rem 0;
+            margin: 0.25rem 0 0;
+            background-color: var(--color-neutral-white, #fff);
+            border: 1px solid var(--color-neutral-light-gray, #e9ecef);
+            border-radius: 4px;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+        
+        .dropdown-menu a {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: var(--text-color-primary, #212529);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        
+        .dropdown-menu a:hover {
+            background-color: var(--color-neutral-light-gray, #f8f9fa);
+        }
+        
+        .dropdown-menu.show {
+            display: block;
+        }
+        
+        /* Portfolio specific styles */
+        .portfolio-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 2rem 0;
+            justify-content: center;
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background: var(--color-neutral-white);
+            border: 1px solid var(--color-neutral-light-gray);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .filter-btn:hover {
+            background-color: var(--color-neutral-light-gray);
+        }
+        
+        .filter-btn.active {
+            background-color: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+        
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .portfolio-item {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            background-color: white;
+        }
+        
+        .portfolio-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        
+        .portfolio-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--color-neutral-light-gray);
+        }
+        
+        .portfolio-content {
+            padding: 1.5rem;
+        }
+        
+        .portfolio-content h3 {
+            margin-top: 0;
+            color: var(--text-color-primary);
+        }
+        
+        .portfolio-category {
+            display: inline-block;
+            background-color: var(--color-primary-light);
+            color: var(--color-primary-dark);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .testimonial-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 3rem 2rem;
+            margin: 3rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .testimonial {
+            padding: 1.5rem;
+            border-radius: 8px;
+            background-color: var(--color-neutral-off-white);
+            position: relative;
+        }
+        
+        .testimonial:before {
+            content: '"';
+            position: absolute;
+            top: 0;
+            left: 15px;
+            font-size: 3rem;
+            color: var(--color-primary);
+            line-height: 1;
+            opacity: 0.3;
+        }
+        
+        .testimonial-content {
+            margin-bottom: 1rem;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .testimonial-author img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 1rem;
+        }
+        
+        .author-info h3 {
+            margin: 0;
+            font-size: 1rem;
+        }
+        
+        .author-info p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-color-secondary);
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        /* Alert styling */
+        .alert {
+            position: relative;
+            padding-right: 2.5rem; /* Make space for the close button */
+        }
+        
+        .alert-close {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: 0 0.5rem;
+            color: inherit;
+            opacity: 0.7;
+        }
+        
+        .alert-close:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="index.html" class="logo">Cream Design System</a>
+            <div class="dropdown-wrapper">
+                <button class="btn btn-outline" id="toggle-menu">Documentação ▼</button>
+                <div class="dropdown-menu" id="docs-menu">
+                    <a href="../design-system/docs/index.html">Guia de Uso</a>
+                    <a href="#" id="components-link">Componentes</a>
+                    <a href="#" id="tokens-link">Tokens</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">Sobre</a></li>
+                <li><a href="contact.html">Contato</a></li>
+                <li><a href="services.html">Serviços</a></li>
+                <li><a href="portfolio.html" class="active">Portfólio</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Nosso Portfólio</h1>
+            <p>Conheça projetos e plataformas que utilizam o Cream Design System para criar experiências excepcionais.</p>
+        </div>
+    </section>
+
+    <main class="container">
+        <div class="alert alert-info" role="status">
+            <button class="alert-close" aria-label="Fechar alerta">×</button>
+            <strong>Novo!</strong> Estamos aceitando inscrições para nosso programa de parceiros. <a href="contact.html">Entre em contato</a> para mais informações.
+        </div>
+        
+        <h2 class="section-title">Projetos em Destaque</h2>
+        <p>Veja como empresas de diversos segmentos estão utilizando o Cream Design System para construir interfaces consistentes e acessíveis.</p>
+        
+        <div class="portfolio-filter">
+            <button class="filter-btn active" data-filter="all" aria-pressed="true">Todos</button>
+            <button class="filter-btn" data-filter="web" aria-pressed="false">Web Apps</button>
+            <button class="filter-btn" data-filter="mobile" aria-pressed="false">Mobile</button>
+            <button class="filter-btn" data-filter="dashboard" aria-pressed="false">Dashboards</button>
+            <button class="filter-btn" data-filter="ecommerce" aria-pressed="false">E-commerce</button>
+        </div>
+        
+        <div class="portfolio-grid">
+            <div class="portfolio-item" data-category="web dashboard">
+                <img src="https://picsum.photos/id/180/800/600" alt="Dashboard Analytics" class="portfolio-image">
+                <div class="portfolio-content">
+                    <span class="portfolio-category">Dashboard</span>
+                    <h3>FinTech Analytics</h3>
+                    <p>Dashboard de análise financeira com visualização de dados avançada.</p>
+                    <button class="btn btn-primary modal-trigger" data-modal="project-1-modal">Ver Detalhes</button>
+                </div>
+            </div>
+            
+            <div class="portfolio-item" data-category="mobile">
+                <img src="https://picsum.photos/id/160/800/600" alt="Aplicativo Mobile" class="portfolio-image">
+                <div class="portfolio-content">
+                    <span class="portfolio-category">Mobile</span>
+                    <h3>HealthTrack App</h3>
+                    <p>Aplicativo de monitoramento de saúde com interface adaptável.</p>
+                    <button class="btn btn-primary modal-trigger" data-modal="project-2-modal">Ver Detalhes</button>
+                </div>
+            </div>
+            
+            <div class="portfolio-item" data-category="web ecommerce">
+                <img src="https://picsum.photos/id/30/800/600" alt="Plataforma E-commerce" class="portfolio-image">
+                <div class="portfolio-content">
+                    <span class="portfolio-category">E-commerce</span>
+                    <h3>StyleShop</h3>
+                    <p>Plataforma de e-commerce com experiência de compra otimizada.</p>
+                    <button class="btn btn-primary modal-trigger" data-modal="project-3-modal">Ver Detalhes</button>
+                </div>
+            </div>
+            
+            <div class="portfolio-item" data-category="web">
+                <img src="https://picsum.photos/id/3/800/600" alt="Portal Educacional" class="portfolio-image">
+                <div class="portfolio-content">
+                    <span class="portfolio-category">Web App</span>
+                    <h3>EduLearn Portal</h3>
+                    <p>Plataforma educacional com foco em acessibilidade.</p>
+                    <button class="btn btn-primary modal-trigger" data-modal="project-4-modal">Ver Detalhes</button>
+                </div>
+            </div>
+            
+            <div class="portfolio-item" data-category="mobile">
+                <img src="https://picsum.photos/id/237/800/600" alt="App de Delivery" class="portfolio-image">
+                <div class="portfolio-content">
+                    <span class="portfolio-category">Mobile</span>
+                    <h3>QuickFood</h3>
+                    <p>Aplicativo de delivery com interfaces adaptativas.</p>
+                    <button class="btn btn-primary modal-trigger" data-modal="project-5-modal">Ver Detalhes</button>
+                </div>
+            </div>
+            
+            <div class="portfolio-item" data-category="dashboard">
+                <img src="https://picsum.photos/id/2/800/600" alt="Sistema de Analytics" class="portfolio-image">
+                <div class="portfolio-content">
+                    <span class="portfolio-category">Dashboard</span>
+                    <h3>MetricsPro</h3>
+                    <p>Sistema de análise de métricas com visualização de dados personalizável.</p>
+                    <button class="btn btn-primary modal-trigger" data-modal="project-6-modal">Ver Detalhes</button>
+                </div>
+            </div>
+        </div>
+        
+        <section class="testimonial-section">
+            <h2 class="text-center">O Que Nossos Clientes Dizem</h2>
+            <p class="text-center">Depoimentos de empresas que implementaram o Cream Design System em seus produtos.</p>
+            
+            <div class="testimonial-grid">
+                <div class="testimonial">
+                    <p class="testimonial-content">O Cream Design System revolucionou nosso processo de design e desenvolvimento. Reduziu o tempo de implementação e melhorou significativamente a consistência da nossa interface.</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/33.jpg" alt="Mariana Santos">
+                        <div class="author-info">
+                            <h3>Mariana Santos</h3>
+                            <p>Product Manager na TechVision</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial">
+                    <p class="testimonial-content">A consistência visual e comportamental que alcançamos com o Cream Design System nos permitiu escalar nosso produto sem perder qualidade de interface.</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Ricardo Oliveira">
+                        <div class="author-info">
+                            <h3>Ricardo Oliveira</h3>
+                            <p>CTO na FinApp</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial">
+                    <p class="testimonial-content">A acessibilidade já embutida nos componentes do Cream nos ajudou a atender os requisitos WCAG sem esforço adicional significativo. É um diferencial competitivo.</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/58.jpg" alt="Camila Ferreira">
+                        <div class="author-info">
+                            <h3>Camila Ferreira</h3>
+                            <p>UX Lead na HealthTech</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <div class="text-center" style="margin: 3rem 0;">
+            <h3>Quer ser o próximo caso de sucesso?</h3>
+            <p>Entre em contato para saber como o Cream Design System pode transformar seus produtos digitais.</p>
+            <a href="contact.html" class="btn btn-primary">Fale Conosco</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#" id="terms-link">Termos de Uso</a>
+            <a href="#" id="privacy-link">Política de Privacidade</a>
+            <a href="contact.html">Contato</a>
+            <a href="../design-system/docs/index.html">Documentação</a>
+        </div>
+        <p>&copy; 2025 Cream Design System</p>
+    </footer>
+
+    <!-- Modais de projetos -->
+    <div id="project-1-modal" class="modal" role="dialog" aria-labelledby="project1Title" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="project1Title" class="modal-title">FinTech Analytics</h2>
+                    <button class="modal-close" aria-label="Fechar modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <img src="https://picsum.photos/id/180/800/600" alt="Dashboard Analytics" style="width: 100%; border-radius: 4px; margin-bottom: 1rem;">
+                    <h3>Sobre o Projeto</h3>
+                    <p>Dashboard de análise financeira desenvolvido para uma fintech, permitindo visualização de dados em tempo real e análises preditivas.</p>
+                    
+                    <h3>Desafio</h3>
+                    <p>Criar uma interface que fosse ao mesmo tempo poderosa para análise de dados complexos, mas intuitiva para usuários com diferentes níveis de expertise financeira.</p>
+                    
+                    <h3>Solução</h3>
+                    <p>Implementamos o Cream Design System com foco nos componentes de visualização de dados, criando dashboards personalizáveis com opções de visualização adaptáveis às necessidades de cada usuário.</p>
+                    
+                    <h3>Componentes Utilizados</h3>
+                    <ul>
+                        <li>Cards analíticos</li>
+                        <li>Gráficos responsivos</li>
+                        <li>Tabelas de dados</li>
+                        <li>Filtros e controles</li>
+                    </ul>
+                    
+                    <h3>Resultados</h3>
+                    <p>Aumento de 45% na retenção de usuários e redução de 30% no tempo de análise devido à melhor organização visual dos dados.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline modal-close">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="project-2-modal" class="modal" role="dialog" aria-labelledby="project2Title" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="project2Title" class="modal-title">HealthTrack App</h2>
+                    <button class="modal-close" aria-label="Fechar modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <img src="https://picsum.photos/id/160/800/600" alt="HealthTrack App" style="width: 100%; border-radius: 4px; margin-bottom: 1rem;">
+                    <h3>Sobre o Projeto</h3>
+                    <p>Aplicativo móvel para monitoramento de saúde e bem-estar, com recursos de tracking de atividades físicas, nutrição e métricas de saúde.</p>
+                    
+                    <h3>Desafio</h3>
+                    <p>Desenvolver uma interface adaptativa para diferentes tamanhos de tela que mantivesse a usabilidade e legibilidade de dados complexos de saúde.</p>
+                    
+                    <h3>Solução</h3>
+                    <p>Adaptamos o Cream Design System para mobile, criando componentes específicos para visualização de dados de saúde e integração com APIs de dispositivos wearables.</p>
+                    
+                    <h3>Componentes Utilizados</h3>
+                    <ul>
+                        <li>Gráficos de progresso</li>
+                        <li>Cards de métricas</li>
+                        <li>Calendários personalizados</li>
+                        <li>Input forms adaptados para touch</li>
+                    </ul>
+                    
+                    <h3>Resultados</h3>
+                    <p>O aplicativo atingiu 500 mil downloads em 6 meses, com avaliação média de 4.7/5 nas lojas de aplicativos, com destaque para a interface intuitiva.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline modal-close">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modais para os outros projetos seguindo o mesmo padrão -->
+    <div id="project-3-modal" class="modal" role="dialog" aria-labelledby="project3Title" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="project3Title" class="modal-title">StyleShop</h2>
+                    <button class="modal-close" aria-label="Fechar modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <img src="https://picsum.photos/id/30/800/600" alt="StyleShop" style="width: 100%; border-radius: 4px; margin-bottom: 1rem;">
+                    <h3>Sobre o Projeto</h3>
+                    <p>Plataforma de e-commerce de moda com experiência de compra otimizada e visualização avançada de produtos.</p>
+                    
+                    <h3>Desafio</h3>
+                    <p>Criar uma experiência de compra envolvente, mantendo altos padrões de acessibilidade e otimização para dispositivos móveis.</p>
+                    
+                    <h3>Solução</h3>
+                    <p>Implementamos o Cream Design System com foco na experiência de navegação e checkout, com componentes adaptados para o contexto de e-commerce.</p>
+                    
+                    <h3>Componentes Utilizados</h3>
+                    <ul>
+                        <li>Cards de produto</li>
+                        <li>Carrossel responsivo</li>
+                        <li>Filtros avançados</li>
+                        <li>Checkout simplificado</li>
+                    </ul>
+                    
+                    <h3>Resultados</h3>
+                    <p>Aumento de 38% na taxa de conversão e redução de 42% na taxa de abandono de carrinho após a implementação da nova interface.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline modal-close">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal para páginas em desenvolvimento -->
+    <div id="coming-soon-modal" class="modal" role="dialog" aria-labelledby="comingSoonTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="comingSoonTitle" class="modal-title">Em Desenvolvimento</h2>
+                    <button class="modal-close" aria-label="Fechar modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <p>Esta funcionalidade está em desenvolvimento e será disponibilizada em breve.</p>
+                    <p>Fique atento às nossas atualizações!</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline modal-close">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript para interatividade -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Portfolio filtering
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const portfolioItems = document.querySelectorAll('.portfolio-item');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Get filter value
+                    const filterValue = this.getAttribute('data-filter');
+                    
+                    // Filter items
+                    portfolioItems.forEach(item => {
+                        const categories = item.getAttribute('data-category').split(' ');
+                        
+                        if (filterValue === 'all' || categories.includes(filterValue)) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Modal functionality
+            const modalTriggers = document.querySelectorAll('.modal-trigger');
+            
+            modalTriggers.forEach(trigger => {
+                trigger.addEventListener('click', function() {
+                    const modalId = this.getAttribute('data-modal');
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        modal.classList.add('show');
+                    }
+                });
+            });
+            
+            // Close modal
+            document.querySelectorAll('.modal-close').forEach(closeBtn => {
+                closeBtn.addEventListener('click', function() {
+                    const modal = this.closest('.modal');
+                    if (modal) {
+                        modal.classList.remove('show');
+                    }
+                });
+            });
+            
+            // Close modal when clicking outside
+            document.addEventListener('click', function(event) {
+                const modals = document.querySelectorAll('.modal.show');
+                modals.forEach(modal => {
+                    if (modal.contains(event.target)) return;
+                    if (!event.target.closest('.modal-content') && !event.target.classList.contains('modal-trigger')) {
+                        modal.classList.remove('show');
+                    }
+                });
+            });
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    const openModal = document.querySelector('.modal.show');
+                    if (openModal) {
+                        openModal.classList.remove('show');
+                    }
+                }
+            });
+            
+            // Dropdown toggle
+            const toggleMenu = document.getElementById('toggle-menu');
+            const docsMenu = document.getElementById('docs-menu');
+            
+            if (toggleMenu && docsMenu) {
+                toggleMenu.addEventListener('click', function() {
+                    docsMenu.classList.toggle('show');
+                });
+                
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function(event) {
+                    if (!event.target.matches('#toggle-menu') && !docsMenu.contains(event.target)) {
+                        docsMenu.classList.remove('show');
+                    }
+                });
+            }
+            
+            // Close alert functionality
+            document.querySelectorAll('.alert-close').forEach(button => {
+                button.addEventListener('click', function() {
+                    this.parentElement.style.display = 'none';
+                });
+            });
+            
+            // Links that trigger "coming soon" modal
+            const comingSoonLinks = [
+                document.getElementById('components-link'),
+                document.getElementById('tokens-link'),
+                document.getElementById('terms-link'),
+                document.getElementById('privacy-link')
+            ];
+            
+            const comingSoonModal = document.getElementById('coming-soon-modal');
+            
+            comingSoonLinks.forEach(link => {
+                if (link) {
+                    link.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        comingSoonModal.classList.add('show');
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

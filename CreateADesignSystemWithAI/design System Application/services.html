@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serviços - Cream Design System</title>
+    <!-- Importa Design System Tokens -->
+    <link rel="stylesheet" href="../design-system/tokens/colors.css">
+    <link rel="stylesheet" href="../design-system/tokens/typography.css">
+    <!-- Importa Design System Components -->
+    <link rel="stylesheet" href="../design-system/components/button.css">
+    <link rel="stylesheet" href="../design-system/components/card.css">
+    <link rel="stylesheet" href="../design-system/components/modal.css">
+    <link rel="stylesheet" href="../design-system/components/tabs.css">
+    <link rel="stylesheet" href="../design-system/components/alert.css">
+    <!-- Estilos básicos para layout -->
+    <style>
+        body { 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
+            margin: 0; 
+            font-family: var(--font-family-base, sans-serif);
+            background-color: var(--color-neutral-off-white, #f8f9fa);
+        }
+        .container { 
+            max-width: 1140px; 
+            margin: 2rem auto; 
+            padding: 0 1rem; 
+            flex-grow: 1; 
+        }
+        header {
+            background-color: var(--color-primary, #007bff);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: var(--font-size-xxl, 1.75rem);
+            font-weight: var(--font-weight-bold, 700);
+            color: white;
+            text-decoration: none;
+        }
+        
+        nav {
+            background-color: var(--color-neutral-white, #fff);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        nav .container {
+            margin: 0 auto;
+            padding: 0;
+        }
+        
+        nav ul { 
+            list-style: none; 
+            padding: 0; 
+            margin: 0; 
+            display: flex; 
+            gap: 1.5rem; 
+            padding: 1rem 0; 
+        }
+        
+        nav a { 
+            text-decoration: none; 
+            color: var(--text-color-primary); 
+            font-weight: var(--font-weight-medium, 500);
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s ease;
+        }
+        
+        nav a:hover, nav a.active { 
+            border-bottom-color: var(--color-primary, #007bff);
+            color: var(--color-primary, #007bff);
+        }
+        
+        footer { 
+            text-align: center; 
+            padding: 2rem; 
+            background-color: var(--color-neutral-gray); 
+            color: var(--text-color-on-dark); 
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-color-on-dark);
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .hero {
+            background-color: var(--color-primary-light, #cfe2ff);
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: var(--font-size-xxxl, 2.5rem);
+            margin-bottom: 1rem;
+            color: var(--text-color-primary);
+        }
+        
+        .hero p {
+            font-size: var(--font-size-lg, 1.25rem);
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: var(--text-color-secondary);
+        }
+        
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .section-title {
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--color-neutral-light-gray);
+            color: var(--text-color-primary);
+        }
+        
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        /* Dropdown menu styles */
+        .dropdown-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            z-index: 1000;
+            min-width: 180px;
+            padding: 0.5rem 0;
+            margin: 0.25rem 0 0;
+            background-color: var(--color-neutral-white, #fff);
+            border: 1px solid var(--color-neutral-light-gray, #e9ecef);
+            border-radius: 4px;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+        
+        .dropdown-menu a {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: var(--text-color-primary, #212529);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        
+        .dropdown-menu a:hover {
+            background-color: var(--color-neutral-light-gray, #f8f9fa);
+        }
+        
+        .dropdown-menu.show {
+            display: block;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 1rem 0;
+        }
+        
+        .feature-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.75rem;
+            position: relative;
+        }
+        
+        .feature-list li::before {
+            content: "✓";
+            color: var(--color-primary);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .pricing-table {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .pricing-plan {
+            background-color: white;
+            border-radius: 8px;
+            border: 1px solid var(--color-neutral-light-gray);
+            padding: 2rem;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .pricing-plan:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .pricing-plan.featured {
+            border-color: var(--color-primary);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .pricing-plan.featured::before {
+            content: "Popular";
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--color-primary);
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 1rem 0;
+            color: var(--text-color-primary);
+        }
+        
+        .price small {
+            font-size: 1rem;
+            font-weight: normal;
+            color: var(--text-color-secondary);
+        }
+        
+        /* Alert styling */
+        .alert {
+            position: relative;
+            padding-right: 2.5rem; /* Make space for the close button */
+        }
+        
+        .alert-close {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: 0 0.5rem;
+            color: inherit;
+            opacity: 0.7;
+        }
+        
+        .alert-close:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="index.html" class="logo">Cream Design System</a>
+            <div class="dropdown-wrapper">
+                <button class="btn btn-outline" id="toggle-menu" aria-haspopup="true" aria-expanded="false" aria-controls="docs-menu">Documentação ▼</button>
+                <div class="dropdown-menu" id="docs-menu" role="menu" aria-labelledby="toggle-menu">
+                    <a href="../design-system/docs/index.html" role="menuitem">Guia de Uso</a>
+                    <a href="#" id="components-link" role="menuitem">Componentes</a>
+                    <a href="#" id="tokens-link" role="menuitem">Tokens</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="index.html" aria-label="Página Principal">Home</a></li>
+                <li><a href="about.html" aria-label="Sobre Nós">Sobre</a></li>
+                <li><a href="contact.html" aria-label="Página de Contato">Contato</a></li>
+                <li><a href="services.html" class="active" aria-label="Nossos Serviços">Serviços</a></li>
+                <li><a href="portfolio.html" aria-label="Nosso Portfólio">Portfólio</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Nossos Serviços</h1>
+            <p>Conheça nossa gama completa de serviços profissionais para ajudar sua equipe a implementar o Cream Design System.</p>
+        </div>
+    </section>
+
+    <main class="container">
+        <div class="alert alert-info" role="status">
+            <button class="alert-close" aria-label="Fechar alerta">×</button>
+            <strong>Novo!</strong> Oferecemos serviços de consultoria UX remota. Entre em contato para mais informações.
+        </div>
+        
+        <h2 class="section-title">Como Podemos Ajudar</h2>
+        <p>O Cream Design System não é apenas um conjunto de componentes — é um ecossistema completo para criar produtos digitais excepcionais. Nossa equipe de especialistas oferece uma variedade de serviços para ajudar a implementar e otimizar seu processo de design e desenvolvimento.</p>
+        
+        <div class="service-grid">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Consultoria</h3>
+                    <p>Orientação estratégica para implementar o Cream Design System em seus produtos e equipes.</p>
+                    <ul class="feature-list">
+                        <li>Workshops para equipes</li>
+                        <li>Auditoria de interface existente</li>
+                        <li>Estratégia de implementação</li>
+                        <li>Treinamento personalizado</li>
+                    </ul>
+                    <button class="btn btn-primary modal-trigger" data-modal="consultoria-modal">Saiba Mais</button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Desenvolvimento</h3>
+                    <p>Serviços de desenvolvimento técnico para implementar o design system no seu projeto.</p>
+                    <ul class="feature-list">
+                        <li>Integração com suas bases de código</li>
+                        <li>Componentes personalizados</li>
+                        <li>Implementação em React/Angular/Vue</li>
+                        <li>Otimização de desempenho</li>
+                    </ul>
+                    <button class="btn btn-primary modal-trigger" data-modal="desenvolvimento-modal">Saiba Mais</button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Design UX/UI</h3>
+                    <p>Serviços de design para criar interfaces acessíveis, consistentes e centradas no usuário.</p>
+                    <ul class="feature-list">
+                        <li>Design de componentes</li>
+                        <li>Prototipagem interativa</li>
+                        <li>Pesquisa com usuários</li>
+                        <li>Testes de usabilidade</li>
+                    </ul>
+                    <button class="btn btn-primary modal-trigger" data-modal="design-modal">Saiba Mais</button>
+                </div>
+            </div>
+        </div>
+        
+        <h2 class="section-title">Planos e Preços</h2>
+        <p class="text-center">Escolha o plano que melhor atende às necessidades da sua equipe e projeto.</p>
+        
+        <div class="pricing-table">
+            <div class="pricing-plan">
+                <h3>Básico</h3>
+                <p>Ideal para startups e pequenas equipes</p>
+                <div class="price">R$2.500<small>/mês</small></div>
+                <ul class="feature-list">
+                    <li>Acesso à biblioteca de componentes</li>
+                    <li>Suporte por email</li>
+                    <li>Atualizações mensais</li>
+                    <li>1 workshop remoto</li>
+                </ul>
+                <a href="contact.html" class="btn btn-outline">Entre em Contato</a>
+            </div>
+            
+            <div class="pricing-plan featured">
+                <h3>Profissional</h3>
+                <p>Para projetos em crescimento</p>
+                <div class="price">R$5.000<small>/mês</small></div>
+                <ul class="feature-list">
+                    <li>Todos os recursos do plano Básico</li>
+                    <li>Suporte prioritário</li>
+                    <li>Componentes personalizados</li>
+                    <li>2 workshops presenciais</li>
+                    <li>Consultoria mensal</li>
+                </ul>
+                <a href="contact.html" class="btn btn-primary">Entre em Contato</a>
+            </div>
+            
+            <div class="pricing-plan">
+                <h3>Enterprise</h3>
+                <p>Para grandes organizações</p>
+                <div class="price">Sob consulta</div>
+                <ul class="feature-list">
+                    <li>Todos os recursos do plano Profissional</li>
+                    <li>Suporte 24/7</li>
+                    <li>Integração com sistemas existentes</li>
+                    <li>Treinamento para toda a equipe</li>
+                    <li>Consultoria dedicada</li>
+                </ul>
+                <a href="contact.html" class="btn btn-outline">Entre em Contato</a>
+            </div>
+        </div>
+        
+        <div class="text-center" style="margin: 3rem 0;">
+            <h3>Precisa de algo personalizado?</h3>
+            <p>Temos soluções flexíveis para atender às necessidades específicas do seu projeto.</p>
+            <a href="contact.html" class="btn btn-primary">Solicite um Orçamento</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#" id="terms-link">Termos de Uso</a>
+            <a href="#" id="privacy-link">Política de Privacidade</a>
+            <a href="contact.html">Contato</a>
+            <a href="../design-system/docs/index.html">Documentação</a>
+        </div>
+        <p>&copy; 2025 Cream Design System</p>
+    </footer>
+
+    <!-- Modais de serviços -->
+    <div id="consultoria-modal" class="modal" role="dialog" aria-labelledby="consultoriaTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="consultoriaTitle" class="modal-title">Serviços de Consultoria</h2>
+                    <button class="modal-close" aria-label="Fechar modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <p>Nossa consultoria ajuda sua equipe a implementar o Cream Design System de forma eficiente e alinhada com seus objetivos de negócio.</p>
+                    
+                    <h3>O que oferecemos:</h3>
+                    <ul>
+                        <li><strong>Workshops para equipes</strong> - Treinamentos práticos sobre design systems e como utilizar o Cream no fluxo de trabalho da equipe.</li>
+                        <li><strong>Auditoria de interface</strong> - Análise completa da sua interface atual, identificando oportunidades de melhoria.</li>
+                        <li><strong>Estratégia de implementação</strong> - Plano personalizado para implementar o design system em fases, minimizando impactos.</li>
+                        <li><strong>Treinamento personalizado</strong> - Capacitação específica para designers, desenvolvedores e gestores de produto.</li>
+                    </ul>
+                    
+                    <p>A consultoria pode ser contratada por hora, projeto ou como parte de um plano mensal.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline modal-close">Fechar</button>
+                    <a href="contact.html" class="btn btn-primary">Solicitar Proposta</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="desenvolvimento-modal" class="modal" role="dialog" aria-labelledby="desenvolvimentoTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="desenvolvimentoTitle" class="modal-title">Serviços de Desenvolvimento</h2>
+                    <button class="modal-close" aria-label="Fechar modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <p>Nossa equipe técnica ajuda a implementar o Cream Design System no seu projeto, garantindo alta qualidade e padrões de código.</p>
+                    
+                    <h3>O que oferecemos:</h3>
+                    <ul>
+                        <li><strong>Integração</strong> - Adaptação do design system à sua base de código existente.</li>
+                        <li><strong>Componentes personalizados</strong> - Desenvolvimento de componentes específicos para as necessidades do seu produto.</li>
+                        <li><strong>Implementação em frameworks</strong> - Adaptação para React, Angular, Vue ou outro framework de sua escolha.</li>
+                        <li><strong>Otimização</strong> - Melhoria de desempenho, acessibilidade e compatibilidade com navegadores.</li>
+                    </ul>
+                    
+                    <p>Trabalhamos em modelo de sprints ou projetos completos, dependendo das necessidades do cliente.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline modal-close">Fechar</button>
+                    <a href="contact.html" class="btn btn-primary">Solicitar Proposta</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="design-modal" class="modal" role="dialog" aria-labelledby="designTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="designTitle" class="modal-title">Serviços de Design UX/UI</h2>
+                    <button class="modal-close" aria-label="Fechar modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <p>Nossa equipe de designers cria interfaces intuitivas, acessíveis e alinhadas com as melhores práticas de experiência do usuário.</p>
+                    
+                    <h3>O que oferecemos:</h3>
+                    <ul>
+                        <li><strong>Design de componentes</strong> - Criação de novos componentes seguindo as diretrizes do Cream Design System.</li>
+                        <li><strong>Prototipagem</strong> - Desenvolvimento de protótipos interativos de alta fidelidade para validação.</li>
+                        <li><strong>Pesquisa com usuários</strong> - Entrevistas, testes e análise de dados para informar decisões de design.</li>
+                        <li><strong>Testes de usabilidade</strong> - Avaliação da interface com usuários reais para identificar problemas e oportunidades.</li>
+                    </ul>
+                    
+                    <p>Nossos designers trabalham em estreita colaboração com sua equipe, garantindo alinhamento com os objetivos de negócio e necessidades dos usuários.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline modal-close">Fechar</button>
+                    <a href="contact.html" class="btn btn-primary">Solicitar Proposta</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal para páginas em desenvolvimento -->
+    <div id="coming-soon-modal" class="modal" role="dialog" aria-labelledby="comingSoonTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="comingSoonTitle" class="modal-title">Em Desenvolvimento</h2>
+                    <button class="modal-close" aria-label="Fechar modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <p>Esta funcionalidade está em desenvolvimento e será disponibilizada em breve.</p>
+                    <p>Fique atento às nossas atualizações!</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline modal-close">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript para interatividade -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Modal functionality
+            const modalTriggers = document.querySelectorAll('.modal-trigger');
+            
+            modalTriggers.forEach(trigger => {
+                trigger.addEventListener('click', function() {
+                    const modalId = this.getAttribute('data-modal');
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        modal.classList.add('show');
+                    }
+                });
+            });
+            
+            // Close modal
+            document.querySelectorAll('.modal-close').forEach(closeBtn => {
+                closeBtn.addEventListener('click', function() {
+                    const modal = this.closest('.modal');
+                    if (modal) {
+                        modal.classList.remove('show');
+                    }
+                });
+            });
+            
+            // Close modal when clicking outside
+            document.addEventListener('click', function(event) {
+                const modals = document.querySelectorAll('.modal.show');
+                modals.forEach(modal => {
+                    if (modal.contains(event.target)) return;
+                    if (!event.target.closest('.modal-content') && !event.target.classList.contains('modal-trigger')) {
+                        modal.classList.remove('show');
+                    }
+                });
+            });
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    const openModal = document.querySelector('.modal.show');
+                    if (openModal) {
+                        openModal.classList.remove('show');
+                    }
+                }
+            });
+            
+            // Dropdown toggle
+            const toggleMenu = document.getElementById('toggle-menu');
+            const docsMenu = document.getElementById('docs-menu');
+            
+            if (toggleMenu && docsMenu) {
+                toggleMenu.addEventListener('click', function() {
+                    docsMenu.classList.toggle('show');
+                });
+                
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function(event) {
+                    if (!event.target.matches('#toggle-menu') && !docsMenu.contains(event.target)) {
+                        docsMenu.classList.remove('show');
+                    }
+                });
+            }
+            
+            // Close alert functionality
+            document.querySelectorAll('.alert-close').forEach(button => {
+                button.addEventListener('click', function() {
+                    this.parentElement.style.display = 'none';
+                });
+            });
+            
+            // Links that trigger "coming soon" modal
+            const comingSoonLinks = [
+                document.getElementById('components-link'),
+                document.getElementById('tokens-link'),
+                document.getElementById('terms-link'),
+                document.getElementById('privacy-link')
+            ];
+            
+            const comingSoonModal = document.getElementById('coming-soon-modal');
+            
+            comingSoonLinks.forEach(link => {
+                if (link) {
+                    link.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        comingSoonModal.classList.add('show');
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+/* === Modal Component === */
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1050; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Disable scroll on modal itself */
+    outline: 0;
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+}
+
+/* State when modal is open (add this class via JS) */
+.modal.is-open {
+    display: flex;
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1040; /* Below modal content, above everything else */
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+}
+
+.modal-content {
+    position: relative;
+    z-index: 1050; /* Above backdrop */
+    background-color: var(--color-neutral-white);
+    border-radius: 4px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh; /* Limit height */
+    width: 500px; /* Default width, adjust as needed */
+    max-width: 90vw; /* Limit width on smaller screens */
+    color: var(--text-color-primary);
+    animation: modal-fade-in 0.3s ease-out; /* Simple fade-in animation */
+    /* Ensure proper contrast with backdrop */
+    border: 1px solid var(--color-neutral-light-gray);
+}
+
+/* Reduced motion accessibility feature */
+@media (prefers-reduced-motion: reduce) {
+    .modal-content {
+        animation: none;
+        transition: none;
+    }
+}
+
+@keyframes modal-fade-in {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-header {
+    display: flex;
+    align-items: flex-start; /* Align items to top */
+    justify-content: space-between; /* Title left, close button right */
+    padding: var(--spacing-medium);
+    border-bottom: 1px solid var(--color-neutral-light-gray);
+}
+
+.modal-title {
+    margin: 0;
+    font-size: var(--font-size-large);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.4;
+    color: var(--text-color-headings);
+}
+
+.modal-close {
+    padding: 0.5rem; /* Increased for larger touch target */
+    background-color: transparent;
+    border: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1;
+    color: var(--color-neutral-gray);
+    opacity: 0.85; /* Improved for better contrast */
+    cursor: pointer;
+    margin-left: var(--spacing-medium); /* Space from title */
+    /* Ensure touch target is large enough */
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px; /* Rounded corners */
+}
+
+.modal-close:hover,
+.modal-close:focus {
+    opacity: 1;
+    text-decoration: none;
+    color: var(--color-neutral-dark-gray); /* Darker color for better contrast */
+    background-color: rgba(0, 0, 0, 0.05); /* Light background for visual feedback */
+}
+
+/* Enhanced focus state for keyboard navigation */
+.modal-close:focus-visible {
+    outline: 3px solid var(--color-feedback-info, #0277BD);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(2, 119, 189, 0.4);
+    position: relative;
+    z-index: 1;
+}
+
+.modal-body {
+    position: relative;
+    flex: 1 1 auto; /* Allow body to grow and shrink */
+    padding: var(--spacing-medium);
+    overflow-y: auto; /* Add scroll if content overflows */
+}
+
+.modal-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center; /* Align items vertically */
+    justify-content: flex-end; /* Align buttons to the right */
+    padding: var(--spacing-small) var(--spacing-medium);
+    border-top: 1px solid var(--color-neutral-light-gray);
+    gap: var(--spacing-small); /* Space between buttons */
+}
+
+/* Optional: Prevent body scroll when modal is open (add class via JS) */
+body.modal-open {
+    overflow: hidden;
+    padding-right: var(--scrollbar-width, 0); /* Prevent layout shift when scrollbar disappears */
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+    .modal-content {
+        border: 2px solid ButtonText;
+    }
+    
+    .modal-close {
+        border: 1px solid ButtonText;
+    }
+    
+    .modal-header,
+    .modal-footer {
+        border-color: ButtonText;
+    }
+}
+
+/* Accessibility utilities */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Modal sizes for different use cases */
+.modal-sm .modal-content {
+    width: 300px;
+}
+
+.modal-lg .modal-content {
+    width: 800px;
+}
+
+/* Optional: Dialog polyfill styles for browsers that don't support <dialog> */
+.modal[data-using-dialog-polyfill] {
+    position: static;
+}

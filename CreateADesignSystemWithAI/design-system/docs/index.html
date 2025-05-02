@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cream Design System - Documentação</title>
+    <!-- Importa os tokens -->
+    <link rel="stylesheet" href="../tokens/colors.css">
+    <link rel="stylesheet" href="../tokens/typography.css">
+    <!-- Estilos específicos da documentação -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Importa CSS de componentes (adicionar conforme criados) -->
+    <link rel="stylesheet" href="../components/button.css">
+    <link rel="stylesheet" href="../components/alert.css">
+    <link rel="stylesheet" href="../components/modal.css">
+    <!-- Link new component CSS -->
+    <link rel="stylesheet" href="../components/dropdown.css">
+    <link rel="stylesheet" href="../components/tabs.css">
+</head>
+<body>
+    <header class="doc-header">
+        <h1>Cream Design System</h1>
+        <p>Diretrizes e componentes para criar interfaces consistentes e acessíveis.</p>
+    </header>
+
+    <nav class="doc-nav">
+        <h2>Navegação</h2>
+        <ul>
+            <li><a href="#introducao">Introdução</a></li>
+            <li><a href="#principios">Princípios</a></li>
+            <li><a href="#tokens">Tokens</a>
+                <ul>
+                    <li><a href="#cores">Cores</a></li>
+                    <li><a href="#tipografia">Tipografia</a></li>
+                    <!-- Adicionar outros tokens (espaçamento, sombras, etc.) -->
+                </ul>
+            </li>
+            <li><a href="#componentes">Componentes</a>
+                <ul>
+                    <li><a href="#componente-botao">Botão</a></li>
+                    <li><a href="#componente-alerta">Alerta</a></li>
+                    <!-- Add links for new components -->
+                    <li><a href="#componente-card">Card</a></li>
+                    <li><a href="#componente-modal">Modal</a></li>
+                    <li><a href="#componente-dropdown">Dropdown</a></li>
+                    <li><a href="#componente-tabs">Tabs</a></li>
+                    <!-- Adicionar links para componentes (Botões, Inputs, etc.) -->
+                </ul>
+            </li>
+            <li><a href="#acessibilidade">Acessibilidade</a></li>
+        </ul>
+    </nav>
+
+    <main class="doc-main">
+        <section id="introducao" aria-labelledby="introducao-heading">
+            <h2 id="introducao-heading">Introdução</h2>
+            <p>Bem-vindo à documentação do Cream Design System. Este sistema fornece os blocos de construção fundamentais, diretrizes de estilo e padrões de componentes para o desenvolvimento de nossos produtos digitais.</p>
+            <p>O objetivo é garantir consistência visual, usabilidade e acessibilidade em todas as nossas interfaces.</p>
+        </section>
+
+        <section id="principios" aria-labelledby="principios-heading">
+            <h2 id="principios-heading">Princípios</h2>
+            <ul>
+                <li><strong>Acessibilidade Primeiro:</strong> Projetamos e construímos para todos, garantindo conformidade com as diretrizes WCAG.</li>
+                <li><strong>Consistência:</strong> Componentes e estilos reutilizáveis garantem uma experiência de usuário unificada.</li>
+                <li><strong>Eficiência:</strong> Acelera o processo de design e desenvolvimento.</li>
+                <li><strong>Flexibilidade:</strong> Adaptável a diferentes contextos e necessidades de produto.</li>
+            </ul>
+        </section>
+
+        <section id="tokens" aria-labelledby="tokens-heading">
+            <h2 id="tokens-heading">Tokens de Design</h2>
+            <p>Tokens são os valores base que definem a aparência visual do sistema.</p>
+
+            <article id="cores" aria-labelledby="cores-heading">
+                <h3 id="cores-heading">Cores</h3>
+                <p>Nossa paleta de cores "Cream" foi definida visando clareza e acessibilidade. Consulte <code>tokens/colors.css</code> para as variáveis.</p>
+                <!-- Adicionar amostras de cores aqui -->
+                <h4>Exemplos de Cores Primárias:</h4>
+                <div class="color-swatch" style="background-color: var(--color-cream-light);">--color-cream-light (#FFF8E1)</div>
+                <div class="color-swatch" style="background-color: var(--color-cream-base);">--color-cream-base (#FFE0B2)</div>
+                <div class="color-swatch" style="background-color: var(--color-cream-dark);">--color-cream-dark (#FFCC80)</div>
+                <h4>Exemplos de Cores Neutras:</h4>
+                 <div class="color-swatch" style="background-color: var(--color-neutral-dark-gray); color: var(--text-color-on-dark);">--color-neutral-dark-gray (#424242) - Texto Primário</div>
+                 <div class="color-swatch" style="background-color: var(--color-neutral-gray); color: var(--text-color-on-dark);">--color-neutral-gray (#757575) - Texto Secundário</div>
+                 <div class="color-swatch" style="background-color: var(--color-neutral-light-gray);">--color-neutral-light-gray (#F5F5F5) - Fundo Card</div>
+                <p><strong>Importante:</strong> Sempre verifique o contraste entre texto e fundo ao aplicar cores.</p>
+            </article>
+
+            <article id="tipografia" aria-labelledby="tipografia-heading">
+                <h3 id="tipografia-heading">Tipografia</h3>
+                <p>Usamos a família de fontes 'Inter' para garantir legibilidade. Consulte <code>tokens/typography.css</code> para as variáveis.</p>
+                <h4>Título Nível 1 (Exemplo h1)</h4>
+                <h5>Título Nível 2 (Exemplo h2)</h5>
+                <h6>Título Nível 3 (Exemplo h3)</h6>
+                <p>Este é um parágrafo de exemplo usando o tamanho de fonte base e a altura de linha padrão para garantir boa legibilidade. <a href="#">Este é um link de exemplo</a>.</p>
+                <p><code>--font-family-base: 'Inter', sans-serif;</code></p>
+                <p><code>--font-size-base: 1rem;</code></p>
+                <p><code>--line-height-base: 1.5;</code></p>
+            </article>
+        </section>
+
+        <section id="componentes" aria-labelledby="componentes-heading">
+            <h2 id="componentes-heading">Componentes</h2>
+            <p>Esta seção documentará os componentes reutilizáveis da interface do usuário (ex: Botões, Inputs, Cards, Modais).</p>
+            
+             <!-- Exemplo de como documentar um componente -->
+
+             <article id="componente-botao" aria-labelledby="botao-heading">
+                <h3 id="botao-heading">Botão</h3>
+                <p>O componente de botão padrão. Use a classe <code>.btn</code> para estilos básicos e <code>.btn-primary</code> para a variação primária.</p>
+                <h4>Exemplo:</h4>
+                <button class="btn btn-primary">Botão Primário</button>
+                <button class="btn btn-primary" disabled>Botão Desabilitado</button>
+                <h4>Código:</h4>
+                <pre><code>&lt;button class="btn btn-primary"&gt;Botão Primário&lt;/button&gt;
+&lt;button class="btn btn-primary" disabled&gt;Botão Desabilitado&lt;/button&gt;</code></pre>
+                <h4>Diretrizes de Acessibilidade:</h4>
+                <ul>
+                    <li>Deve ter texto descritivo claro que indique a ação.</li>
+                    <li>Deve ser focável e operável pelo teclado (use a tecla Tab para navegar e Enter/Espaço para ativar).</li>
+                    <li>Estados de foco, hover e ativo devem ser visualmente distintos (fornecidos por <code>button.css</code>).</li>
+                    <li>Garantir contraste suficiente entre o texto do botão e seu fundo (Verifique a variável <code>--text-color-primary</code> vs <code>--background-color-primary-button</code> em <code>colors.css</code>. Pode ser necessário usar <code>--text-color-on-dark</code> se o contraste for baixo).</li>
+                    <li>Use o atributo <code>disabled</code> para desabilitar botões programaticamente.</li>
+                    <li>Para botões que usam apenas ícones, forneça um texto alternativo acessível (ex: usando <code>aria-label</code> ou texto visualmente oculto).</li>
+                </ul>
+             </article>
+
+             <article id="componente-alerta" aria-labelledby="alerta-heading">
+                <h3 id="alerta-heading">Alerta</h3>
+                <p>Componente para exibir mensagens importantes ou feedback para o usuário. Use as classes <code>.alert</code> e modifique com <code>.alert-info</code>, <code>.alert-success</code>, <code>.alert-warning</code>, ou <code>.alert-error</code>.</p>
+                <p>Adicione <code>role="alert"</code> para mensagens críticas (ex: erros) ou <code>role="status"</code> para mensagens informativas (ex: sucesso) para acessibilidade.</p>
+                <p>Para tornar um alerta dispensável, adicione um botão com a classe <code>.alert-close</code> e o atributo <code>aria-label="Fechar alerta"</code>.</p>
+
+                <h4>Exemplos:</h4>
+                <div class="alert alert-info" role="status">
+                    Esta é uma mensagem informativa.
+                    <button class="alert-close" aria-label="Fechar alerta">&times;</button>
+                </div>
+                <div class="alert alert-success" role="status">
+                    Operação realizada com sucesso!
+                    <button class="alert-close" aria-label="Fechar alerta">&times;</button>
+                </div>
+                <div class="alert alert-warning" role="alert">
+                    Atenção: Verifique os dados inseridos.
+                    <button class="alert-close" aria-label="Fechar alerta">&times;</button>
+                </div>
+                <div class="alert alert-error" role="alert">
+                    Ocorreu um erro ao processar a solicitação.
+                    <button class="alert-close" aria-label="Fechar alerta">&times;</button>
+                </div>
+
+                <h4>Código:</h4>
+                <pre><code>&lt;!-- Alerta Informativo (dispensável) --&gt;
+&lt;div class="alert alert-info" role="status"&gt;
+  Esta é uma mensagem informativa.
+  &lt;button class="alert-close" aria-label="Fechar alerta"&gt;&times;&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;!-- Alerta de Erro (dispensável) --&gt;
+&lt;div class="alert alert-error" role="alert"&gt;
+  Ocorreu um erro.
+  &lt;button class="alert-close" aria-label="Fechar alerta"&gt;&times;&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+                <h4>Diretrizes de Acessibilidade:</h4>
+                <ul>
+                    <li>Use <code>role="alert"</code> para mensagens críticas que precisam ser anunciadas imediatamente por leitores de tela.</li>
+                    <li>Use <code>role="status"</code> para mensagens informativas que podem ser anunciadas quando o leitor de tela estiver ocioso.</li>
+                    <li>Garanta contraste suficiente entre o texto e o fundo de cada variante do alerta.</li>
+                    <li>O botão de fechar (<code>.alert-close</code>) deve:
+                        <ul>
+                            <li>Ter um rótulo acessível claro (ex: <code>aria-label="Fechar alerta"</code>).</li>
+                            <li>Ter uma área de toque adequada (mínimo 44x44px seguindo WCAG 2.5.5 nível AAA).</li>
+                            <li>Ter estados de foco visíveis e distintos para usuários de teclado.</li>
+                            <li>Ser operável pelo teclado (navegável com Tab e ativável com Enter/Espaço).</li>
+                            <li>Ter suporte para modo de alto contraste.</li>
+                        </ul>
+                    </li>
+                    <li>Se usar ícones SVG, adicione <code>aria-hidden="true"</code> para evitar anúncios duplicados pelos leitores de tela.</li>
+                    <li>Para alertas com conteúdo mais complexo, use <code>.alert-content</code> para estruturar o conteúdo e <code>.alert-heading</code> para títulos.</li>
+                    <li>Respeite a preferência <code>prefers-reduced-motion</code> para animações.</li>
+                </ul>
+             </article>
+
+             <!-- New Card Component Documentation -->
+             <article id="componente-card" aria-labelledby="card-heading">
+                <h3 id="card-heading">Card</h3>
+                <p>Cards são contêineres flexíveis para agrupar conteúdo relacionado, como imagens, texto e ações.</p>
+                <p>Use a classe base <code>.card</code>. Você pode adicionar seções como <code>.card-header</code>, <code>.card-body</code>, <code>.card-footer</code>, e <code>.card-image</code>.</p>
+
+                <h4>Exemplo:</h4>
+                <div class="card" style="max-width: 300px;">
+                    <!-- Placeholder for image -->
+                    <div class="card-image" style="height: 150px; background-color: var(--color-neutral-light-gray); display: flex; align-items: center; justify-content: center; color: var(--color-neutral-gray);">[Imagem Placeholder]</div>
+                    <div class="card-body">
+                        <h4 class="card-title">Título do Card</h4>
+                        <p>Este é um texto de exemplo dentro do corpo do card. Ele descreve o conteúdo apresentado.</p>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary btn-sm">Ação</button>
+                    </div>
+                </div>
+
+                <h4>Código:</h4>
+                <pre><code>&lt;div class="card"&gt;
+  &lt;div class="card-image"&gt;
+    &lt;!-- Seu elemento de imagem aqui --&gt;
+    &lt;img src="..." alt="Descrição concisa da imagem"&gt; 
+  &lt;/div&gt;
+  &lt;div class="card-body"&gt;
+    &lt;h4 class="card-title"&gt;Título do Card&lt;/h4&gt;
+    &lt;p&gt;Descrição ou conteúdo do card.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="card-footer"&gt;
+    &lt;!-- Ações ou informações adicionais --&gt;
+    &lt;button class="btn btn-primary btn-sm"&gt;Ação&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <h4>Diretrizes de Acessibilidade:</h4>
+                <ul>
+                    <li>Garanta que a estrutura do cabeçalho (ex: <code>.card-title</code> usando <code>h4</code> ou similar) seja apropriada para a hierarquia da página.</li>
+                    <li>Se o card inteiro for um link clicável, certifique-se de que ele tenha um estado de foco claro e que o propósito do link seja óbvio.</li>
+                    <li>Imagens dentro do card (<code>.card-image</code>) devem ter texto alternativo (<code>alt</code>) descritivo, a menos que sejam puramente decorativas.</li>
+                    <li>Ações (botões, links) dentro do card devem seguir as diretrizes de acessibilidade para esses elementos (texto claro, foco, operabilidade por teclado).</li>
+                </ul>
+             </article>
+
+             <!-- New Modal Component Documentation -->
+             <article id="componente-modal" aria-labelledby="modal-heading">
+                <h3 id="modal-heading">Modal</h3>
+                <p>Modais são janelas de diálogo que aparecem sobre o conteúdo principal para exibir informações importantes ou solicitar entrada do usuário.</p>
+                <p>A estrutura básica envolve um contêiner <code>.modal</code> (inicialmente oculto) e o conteúdo <code>.modal-content</code> com <code>.modal-header</code>, <code>.modal-body</code>, e <code>.modal-footer</code>.</p>
+                <p>A exibição/ocultação geralmente requer JavaScript para adicionar/remover uma classe (ex: <code>.modal-open</code>) no <code>&lt;body&gt;</code> ou no próprio modal.</p>
+
+                <h4>Exemplo (Estrutura HTML):</h4>
+                <button class="btn btn-primary" data-modal-target="#meuModalExemplo">Abrir Modal</button>
+
+                <div class="modal" id="meuModalExemplo" aria-labelledby="modalExemploLabel" aria-hidden="true" role="dialog" style="position: relative; display: block; opacity: 1; margin-top: 1rem; margin-bottom: 1.5rem; z-index: 1;"> <!-- Added margin-bottom and display styles for demo -->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modalExemploLabel">Título do Modal</h4>
+                            <button class="modal-close" aria-label="Fechar modal" data-modal-close>&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Este é o conteúdo principal do modal. Pode conter formulários, texto, imagens, etc.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn" data-modal-close>Cancelar</button>
+                            <button class="btn btn-primary">Confirmar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <h4>Código (Estrutura HTML):</h4>
+                <pre><code>&lt;!-- Botão para abrir o modal --&gt;
+&lt;button class="btn btn-primary" data-modal-target="#meuModal"&gt;Abrir Modal&lt;/button&gt;
+
+&lt;!-- Estrutura do Modal --&gt;
+&lt;div class="modal" id="meuModal" aria-labelledby="modalLabel" aria-hidden="true" role="dialog"&gt;
+  &lt;div class="modal-content" role="document"&gt;
+    &lt;div class="modal-header"&gt;
+      &lt;h4 class="modal-title" id="modalLabel"&gt;Título do Modal&lt;/h4&gt;
+      &lt;button class="modal-close" aria-label="Fechar modal" data-modal-close&gt;&times;&lt;/button&gt;
+    &lt;/div&gt;
+    <div class="modal-body">
+      <p>Conteúdo do modal...</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" data-modal-close>Fechar</button>
+      <button class="btn btn-primary">Salvar</button>
+    </div>
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+                <h4>Melhores Práticas:</h4>
+                <ul style="margin-bottom: 1rem;">
+                    <li><strong>Não use modais como páginas inteiras</strong>: Modais devem ser usados para interações breves e focadas, não como substitutos para páginas completas.</li>
+                    <li><strong>Casos de uso apropriados</strong>:
+                        <ul>
+                            <li>Confirmações (ex: "Tem certeza que deseja excluir?").</li>
+                            <li>Formulários curtos (login, inscrição em newsletter).</li>
+                            <li>Exibição de informações complementares que não justificam uma navegação de página completa.</li>
+                            <li>Ampliação de imagens ou visualização detalhada de elementos.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Evite</strong>:
+                        <ul>
+                            <li>Formulários extensos ou complexos.</li>
+                            <li>Conteúdo que é essencial para a navegação principal.</li>
+                            <li>Informações críticas que todos os usuários precisam ver.</li>
+                            <li>Empilhar modais (modal dentro de modal).</li>
+                            <li>Modais que ocupam toda a tela - neste caso, use uma página separada.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Tamanho adequado</strong>: O conteúdo deve caber confortavelmente na janela sem exigir rolagem excessiva. Se precisar de muito espaço vertical, considere uma página dedicada.</li>
+                    <li><strong>Sempre forneça uma saída clara</strong>: Botões de fechar visíveis, possibilidade de fechar com tecla ESC e clicando fora do modal.</li>
+                </ul>
+
+                <h4>Diretrizes de Acessibilidade:</h4>
+                <ul style="margin-bottom: 1.5rem;">
+                    <li>Use <code>role="dialog"</code> ou <code>role="alertdialog"</code> no contêiner principal do modal (<code>.modal</code>).</li>
+                    <li>Use <code>aria-labelledby</code> para associar o título visível (<code>.modal-title</code>) ao modal. O ID referenciado deve estar no elemento do título.</li>
+                    <li>Use <code>aria-describedby</code> (opcional) se houver um texto descritivo principal no modal que deva ser anunciado.</li>
+                    <li>Gerencie o atributo <code>aria-hidden</code>: deve ser <code>"true"</code> quando o modal está fechado e <code>"false"</code> (ou removido) quando aberto.</li>
+                    <li><strong>Gerenciamento de Foco:</strong>
+                        <ul>
+                            <li>Quando o modal abre, o foco deve ser movido para dentro dele (geralmente para o primeiro elemento focável, como o botão de fechar ou um input).</li>
+                            <li>O foco deve ser "preso" (trap) dentro do modal enquanto ele estiver aberto (Tab e Shift+Tab não devem sair do modal).</li>
+                            <li>Quando o modal fecha, o foco deve retornar ao elemento que o abriu originalmente (ex: o botão "Abrir Modal").</li>
+                        </ul>
+                    </li>
+                    <li>O botão de fechar (<code>.modal-close</code>) deve ser operável pelo teclado e ter um <code>aria-label</code> claro.</li>
+                    <li>Permitir fechar o modal com a tecla Escape.</li>
+                    <li>O conteúdo fora do modal deve ser inerte (não interagível) quando o modal está aberto (pode ser feito com <code>aria-hidden="true"</code> nos elementos principais da página ou usando o atributo <code>inert</code>).</li>
+                </ul>
+                <p><strong>Nota:</strong> A implementação completa da acessibilidade do modal (gerenciamento de foco, trap de foco, tecla Esc, <code>aria-hidden</code>) requer JavaScript.</p>
+             </article>
+
+             <!-- New Dropdown Component Documentation -->
+             <article id="componente-dropdown" aria-labelledby="dropdown-heading">
+                <h3 id="dropdown-heading">Dropdown</h3>
+                <p>Dropdowns permitem que os usuários selecionem um valor de uma lista. Este exemplo usa um botão para acionar um menu suspenso.</p>
+                <p>A estrutura envolve um contêiner <code>.dropdown</code>, um botão de acionamento (<code>.dropdown-toggle</code>) e o menu (<code>.dropdown-menu</code>) com itens (<code>.dropdown-item</code>).</p>
+                <p>JavaScript é necessário para alternar a visibilidade do menu, gerenciar o estado (aberto/fechado), lidar com a seleção e implementar a acessibilidade (ARIA, navegação por teclado).</p>
+
+                <h4>Exemplo:</h4>
+                <div class="dropdown" data-component="dropdown">
+                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" aria-haspopup="listbox" aria-expanded="false">
+                        Selecione uma Opção
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" role="listbox">
+                        <li><button class="dropdown-item" type="button" role="option" data-value="opcao1">Opção 1</button></li>
+                        <li><button class="dropdown-item" type="button" role="option" data-value="opcao2">Opção 2</button></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><button class="dropdown-item" type="button" role="option" data-value="opcao3">Opção 3 (Mais Longa)</button></li>
+                    </ul>
+                </div>
+
+                <h4>Código (Estrutura HTML):</h4>
+                <pre><code>&lt;div class="dropdown" data-component="dropdown"&gt;
+  &lt;!-- Botão que abre o dropdown --&gt;
+  &lt;button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" 
+          aria-haspopup="listbox" aria-expanded="false"&gt;
+    Selecione...
+  &lt;/button&gt;
+  
+  &lt;!-- O menu dropdown --&gt;
+  &lt;ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" role="listbox"&gt;
+    &lt;li&gt;
+      &lt;button class="dropdown-item" type="button" role="option" data-value="valor1"&gt;
+        Item 1
+      &lt;/button&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;button class="dropdown-item" type="button" role="option" data-value="valor2"&gt;
+        Item 2
+      &lt;/button&gt;
+    &lt;/li&gt;
+    &lt;li&gt;&lt;hr class="dropdown-divider"&gt;&lt;/li&gt; &lt;!-- Separador opcional --&gt;
+    &lt;li&gt;
+      &lt;button class="dropdown-item" type="button" role="option" data-value="valor3"&gt;
+        Outro Item
+      &lt;/button&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;</code></pre>
+                <h4>Diretrizes de Acessibilidade:</h4>
+                <ul>
+                    <li>O botão de acionamento (<code>.dropdown-toggle</code>) deve ter:
+                        <ul>
+                            <li><code>aria-haspopup="listbox"</code> para indicar que controla um menu de opções.</li>
+                            <li><code>aria-expanded="true/false"</code> para indicar o estado do menu (gerenciado por JS).</li>
+                            <li>Um ID único para ser referenciado por <code>aria-labelledby</code> no menu.</li>
+                        </ul>
+                    </li>
+                    <li>O contêiner do menu (<code>.dropdown-menu</code>) deve ter:
+                        <ul>
+                            <li><code>role="listbox"</code> para definir sua função.</li>
+                            <li><code>aria-labelledby</code> referenciando o ID do botão de acionamento.</li>
+                        </ul>
+                    </li>
+                    <li>Cada item clicável dentro do menu (<code>.dropdown-item</code>) deve ter:
+                        <ul>
+                            <li><code>role="option"</code>.</li>
+                            <li><code>aria-selected="true/false"</code> (opcional, se precisar indicar a seleção atual visualmente e para leitores de tela).</li>
+                            <li>Ser um <code>&lt;button&gt;</code> ou <code>&lt;a&gt;</code> para ser focável e operável por teclado.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Gerenciamento de Foco e Teclado (Requer JS):</strong>
+                        <ul>
+                            <li>Quando o menu abre, o foco deve ir para o primeiro item (ou o item selecionado).</li>
+                            <li>Setas Cima/Baixo devem navegar entre os itens.</li>
+                            <li>Enter ou Espaço devem selecionar o item focado e fechar o menu.</li>
+                            <li>Escape deve fechar o menu sem selecionar.</li>
+                            <li>Tab deve fechar o menu e mover o foco para o próximo elemento focável fora do dropdown.</li>
+                            <li>Clicar fora do menu deve fechá-lo.</li>
+                        </ul>
+                    </li>
+                </ul>
+                <p><strong>Nota:</strong> A implementação completa da acessibilidade e funcionalidade do dropdown requer JavaScript robusto.</p>
+
+                <h4>Opções de Alinhamento de Texto:</h4>
+                <p>O dropdown permite diferentes opções de alinhamento de texto para adaptar-se a diversos layouts:</p>
+
+                <div style="display: flex; gap: 1rem; margin: 1rem 0; flex-wrap: wrap;">
+                    <!-- Dropdown com alinhamento padrão (esquerda) -->
+                    <div class="dropdown" data-component="dropdown" style="margin-bottom: 1rem;">
+                        <button class="btn dropdown-toggle" type="button" id="dropdownDefault" aria-haspopup="menu" aria-expanded="false">
+                            Alinhamento Esquerda
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownDefault" role="menu">
+                            <li><a href="#" class="dropdown-item" role="menuitem">Item Alinhado à Esquerda</a></li>
+                            <li><a href="#" class="dropdown-item" role="menuitem">Outro Item</a></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Dropdown com alinhamento central -->
+                    <div class="dropdown" data-component="dropdown" style="margin-bottom: 1rem;">
+                        <button class="btn dropdown-toggle text-center" type="button" id="dropdownCentered" aria-haspopup="menu" aria-expanded="false">
+                            Alinhamento Centro
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-centered" aria-labelledby="dropdownCentered" role="menu">
+                            <li><a href="#" class="dropdown-item" role="menuitem">Item Centralizado</a></li>
+                            <li><a href="#" class="dropdown-item" role="menuitem">Outro Item</a></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Dropdown com alinhamento direita -->
+                    <div class="dropdown" data-component="dropdown" style="margin-bottom: 1rem;">
+                        <button class="btn dropdown-toggle text-right" type="button" id="dropdownRight" aria-haspopup="menu" aria-expanded="false">
+                            Alinhamento Direita
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right-aligned" aria-labelledby="dropdownRight" role="menu">
+                            <li><a href="#" class="dropdown-item" role="menuitem">Item Alinhado à Direita</a></li>
+                            <li><a href="#" class="dropdown-item" role="menuitem">Outro Item</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h4>Código para Alinhamentos:</h4>
+                <pre><code>&lt;!-- Dropdown com alinhamento padrão (esquerda) --&gt;
+&lt;div class="dropdown" data-component="dropdown"&gt;
+  &lt;button class="btn dropdown-toggle" type="button" id="dropdownDefault" 
+          aria-haspopup="menu" aria-expanded="false"&gt;
+    Alinhamento Esquerda
+  &lt;/button&gt;
+  &lt;ul class="dropdown-menu" aria-labelledby="dropdownDefault" role="menu"&gt;
+    &lt;li&gt;&lt;a href="#" class="dropdown-item" role="menuitem"&gt;Item Alinhado à Esquerda&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#" class="dropdown-item" role="menuitem"&gt;Outro Item&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;!-- Dropdown com alinhamento central --&gt;
+&lt;div class="dropdown" data-component="dropdown"&gt;
+  &lt;button class="btn dropdown-toggle text-center" type="button" id="dropdownCentered" 
+          aria-haspopup="menu" aria-expanded="false"&gt;
+    Alinhamento Centro
+  &lt;/button&gt;
+  &lt;ul class="dropdown-menu dropdown-menu-centered" aria-labelledby="dropdownCentered" role="menu"&gt;
+    &lt;li&gt;&lt;a href="#" class="dropdown-item" role="menuitem"&gt;Item Centralizado&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#" class="dropdown-item" role="menuitem"&gt;Outro Item&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;!-- Dropdown com alinhamento direita --&gt;
+&lt;div class="dropdown" data-component="dropdown"&gt;
+  &lt;button class="btn dropdown-toggle text-right" type="button" id="dropdownRight" 
+          aria-haspopup="menu" aria-expanded="false"&gt;
+    Alinhamento Direita
+  &lt;/button&gt;
+  &lt;ul class="dropdown-menu dropdown-menu-right-aligned" aria-labelledby="dropdownRight" role="menu"&gt;
+    &lt;li&gt;&lt;a href="#" class="dropdown-item" role="menuitem"&gt;Item Alinhado à Direita&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#" class="dropdown-item" role="menuitem"&gt;Outro Item&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;</code></pre>
+             </article>
+
+             <!-- New Tabs Component Documentation -->
+             <article id="componente-tabs" aria-labelledby="tabs-heading">
+                <h3 id="tabs-heading">Tabs</h3>
+                <p>Tabs permitem organizar conteúdo em seções separadas que podem ser exibidas uma de cada vez.</p>
+                <p>A estrutura envolve uma lista de controles de tab (<code>.tab-list</code> com <code>role="tablist"</code>), cada um sendo um botão (<code>.tab-item</code> com <code>role="tab"</code>), e os painéis de conteúdo correspondentes (<code>.tab-panel</code> com <code>role="tabpanel"</code>).</p>
+                <p>JavaScript é essencial para alternar a visibilidade dos painéis, gerenciar os atributos ARIA de estado (<code>aria-selected</code>, <code>aria-controls</code>) e implementar a navegação por teclado.</p>
+
+                <h4>Exemplo:</h4>
+                <div class="tabs" data-component="tabs">
+                    <div class="tab-list" role="tablist" aria-label="Exemplo de Abas">
+                        <button class="tab-item" role="tab" id="tab1" aria-controls="panel1" aria-selected="true">Aba 1</button>
+                        <button class="tab-item" role="tab" id="tab2" aria-controls="panel2" aria-selected="false" tabindex="-1">Aba 2</button>
+                        <button class="tab-item" role="tab" id="tab3" aria-controls="panel3" aria-selected="false" tabindex="-1">Aba 3</button>
+                    </div>
+                    <div class="tab-panel" role="tabpanel" id="panel1" aria-labelledby="tab1">
+                        <p>Conteúdo do Painel 1. Este é o conteúdo inicial visível.</p>
+                    </div>
+                    <div class="tab-panel" role="tabpanel" id="panel2" aria-labelledby="tab2" hidden>
+                        <p>Conteúdo do Painel 2.</p>
+                    </div>
+                    <div class="tab-panel" role="tabpanel" id="panel3" aria-labelledby="tab3" hidden>
+                        <p>Conteúdo do Painel 3. Mais informações aqui.</p>
+                    </div>
+                </div>
+
+                <h4>Código (Estrutura HTML):</h4>
+                <pre><code>&lt;div class="tabs" data-component="tabs"&gt;
+  &lt;!-- Lista de controles das abas --&gt;
+  &lt;div class="tab-list" role="tablist" aria-label="Nome descritivo do conjunto de abas"&gt;
+    &lt;button class="tab-item" role="tab" id="tab-ex1" 
+            aria-controls="panel-ex1" aria-selected="true"&gt;
+      Título Aba 1
+    &lt;/button&gt;
+    &lt;button class="tab-item" role="tab" id="tab-ex2" 
+            aria-controls="panel-ex2" aria-selected="false" tabindex="-1"&gt;
+      Título Aba 2
+    &lt;/button&gt;
+    &lt;button class="tab-item" role="tab" id="tab-ex3" 
+            aria-controls="panel-ex3" aria-selected="false" tabindex="-1"&gt;
+      Título Aba 3
+    &lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Painéis de conteúdo --&gt;
+  &lt;div class="tab-panel" role="tabpanel" id="panel-ex1" aria-labelledby="tab-ex1"&gt;
+    &lt;p&gt;Conteúdo da Aba 1...&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="tab-panel" role="tabpanel" id="panel-ex2" aria-labelledby="tab-ex2" hidden&gt;
+    &lt;p&gt;Conteúdo da Aba 2...&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="tab-panel" role="tabpanel" id="panel-ex3" aria-labelledby="tab-ex3" hidden&gt;
+    &lt;p&gt;Conteúdo da Aba 3...&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                <h4>Diretrizes de Acessibilidade:</h4>
+                <ul>
+                    <li>O contêiner da lista de abas (<code>.tab-list</code>) deve ter <code>role="tablist"</code> e um <code>aria-label</code> descritivo.</li>
+                    <li>Cada botão de aba (<code>.tab-item</code>) deve ter:
+                        <ul>
+                            <li><code>role="tab"</code>.</li>
+                            <li><code>aria-selected="true/false"</code> indicando se é a aba ativa (gerenciado por JS). Apenas uma aba deve ter <code>true</code>.</li>
+                            <li><code>aria-controls</code> referenciando o ID do painel de conteúdo correspondente.</li>
+                            <li>Um ID único para ser referenciado por <code>aria-labelledby</code> no painel.</li>
+                            <li><code>tabindex="0"</code> para a aba ativa e <code>tabindex="-1"</code> para as inativas (gerenciado por JS) para navegação por teclado.</li>
+                        </ul>
+                    </li>
+                    <li>Cada painel de conteúdo (<code>.tab-panel</code>) deve ter:
+                        <ul>
+                            <li><code>role="tabpanel"</code>.</li>
+                            <li><code>aria-labelledby</code> referenciando o ID do botão de aba correspondente.</li>
+                            <li>O atributo <code>hidden</code> para painéis inativos (gerenciado por JS).</li>
+                        </ul>
+                    </li>
+                    <li><strong>Gerenciamento de Foco e Teclado (Requer JS):</strong>
+                        <ul>
+                            <li>Setas Esquerda/Direita (ou Cima/Baixo se <code>aria-orientation="vertical"</code>) devem mover o foco entre os botões de aba (<code>.tab-item</code>). A ativação da aba (mostrar painel) pode ocorrer ao mover o foco ou ao pressionar Enter/Espaço.</li>
+                            <li>Home deve mover o foco para a primeira aba.</li>
+                            <li>End deve mover o foco para a última aba.</li>
+                            <li>Tab deve mover o foco para fora do componente de abas (para o painel ativo ou para o próximo elemento focável após a lista de abas).</li>
+                        </ul>
+                    </li>
+                </ul>
+             </article>
+
+        </section>
+
+        <section id="acessibilidade" aria-labelledby="acessibilidade-heading">
+            <h3 id="acessibilidade-heading">Diretrizes de Acessibilidade</h3>
+            <p>A acessibilidade é um pilar fundamental deste design system. Todos os componentes e padrões devem seguir as WCAG (Web Content Accessibility Guidelines) 2.1 nível AA como mínimo.</p>
+            <ul>
+                <li><strong>Contraste de Cores:</strong> Mantenha relações de contraste adequadas.</li>
+                <li><strong>Navegação por Teclado:</strong> Todos os elementos interativos devem ser acessíveis e operáveis via teclado.</li>
+                <li><strong>Foco Visível:</strong> Indicadores de foco claros são essenciais.</li>
+                <li><strong>Semântica HTML:</strong> Use elementos HTML semanticamente corretos (<code>&lt;nav&gt;</code>, <code>&lt;button&gt;</code>, <code>&lt;main&gt;</code>, etc.).</li>
+                <li><strong>ARIA:</strong> Use atributos ARIA (Accessible Rich Internet Applications) quando necessário para melhorar a semântica de componentes complexos.</li>
+                <li><strong>Texto Alternativo:</strong> Forneça texto alternativo descritivo para imagens.</li>
+                <li><strong>Formulários Acessíveis:</strong> Use labels associadas corretamente aos inputs.</li>
+                <li><strong>Responsivo e Zoom:</strong> O conteúdo deve ser acessível em ampliações de até 200% e em diferentes tamanhos de tela.</li>
+                <li><strong>Testes com Leitores de Tela:</strong> Valide todos os componentes com softwares leitores de tela como NVDA, JAWS e VoiceOver.</li>
+                <li><strong>Compatibilidade com Alto Contraste:</strong> Verifique se os componentes são utilizáveis em modo de alto contraste.</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="doc-footer" role="contentinfo">
+        <p>Cream Design System &copy; 202
+    <!-- Adicionar script no final do body -->
+    <script src="main.js"></script>
+
+    <!-- Script de verificação de acessibilidade -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Verifica imagens sem alt
+        const imagesWithoutAlt = document.querySelectorAll('img:not([alt])');
+        if (imagesWithoutAlt.length > 0) {
+            console.warn('Accessibility issue: Found ' + imagesWithoutAlt.length + ' images without alt attribute');
+        }
+        
+        // Verifica controles sem labels
+        const controlsWithoutLabels = document.querySelectorAll('input:not([aria-label]):not([aria-labelledby]):not([type="hidden"]), select:not([aria-label]):not([aria-labelledby]), textarea:not([aria-label]):not([aria-labelledby])');
+        if (controlsWithoutLabels.length > 0) {
+            console.warn('Accessibility issue: Found ' + controlsWithoutLabels.length + ' form controls without proper labels');
+        }
+    });
+    </script>
+</body>
+</html>

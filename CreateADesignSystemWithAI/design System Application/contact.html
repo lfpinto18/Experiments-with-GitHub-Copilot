@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato - Cream Design System</title>
+    <!-- Importa Design System Tokens -->
+    <link rel="stylesheet" href="../design-system/tokens/colors.css">
+    <link rel="stylesheet" href="../design-system/tokens/typography.css">
+    <!-- Importa Design System Components -->
+    <link rel="stylesheet" href="../design-system/components/button.css">
+    <link rel="stylesheet" href="../design-system/components/alert.css">
+    <link rel="stylesheet" href="../design-system/components/modal.css">
+    <!-- Estilos básicos para layout (opcional) -->
+    <style>
+        body { 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
+            margin: 0; 
+            font-family: var(--font-family-base, sans-serif);
+            background-color: var(--color-neutral-off-white, #f8f9fa);
+        }
+        .container { max-width: 960px; margin: 2rem auto; padding: 0 1rem; flex-grow: 1; }
+        
+        header {
+            background-color: var(--color-primary, #007bff);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: var(--font-size-xxl, 1.75rem);
+            font-weight: var(--font-weight-bold, 700);
+            color: white;
+            text-decoration: none;
+        }
+        
+        nav {
+            background-color: var(--color-neutral-white, #fff);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        nav .container {
+            margin: 0 auto;
+            padding: 0;
+        }
+        
+        nav ul { 
+            list-style: none; 
+            padding: 0; 
+            margin: 0; 
+            display: flex; 
+            gap: 1.5rem; 
+            padding: 1rem 0; 
+        }
+        
+        nav a { 
+            text-decoration: none; 
+            color: var(--text-color-primary); 
+            font-weight: var(--font-weight-medium, 500);
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s ease;
+        }
+        
+        nav a:hover, nav a.active { 
+            border-bottom-color: var(--color-primary, #007bff);
+            color: var(--color-primary, #007bff);
+        }
+        
+        /* Dropdown menu styles */
+        .dropdown-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            z-index: 1000;
+            min-width: 180px;
+            padding: 0.5rem 0;
+            margin: 0.25rem 0 0;
+            background-color: var(--color-neutral-white, #fff);
+            border: 1px solid var(--color-neutral-light-gray, #e9ecef);
+            border-radius: 4px;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+        
+        .dropdown-menu a {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: var(--text-color-primary, #212529);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        
+        .dropdown-menu a:hover {
+            background-color: var(--color-neutral-light-gray, #f8f9fa);
+        }
+        
+        .dropdown-menu.show {
+            display: block;
+        }
+        
+        /* Form specific styles */
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: var(--font-weight-medium); }
+        .form-group input, .form-group textarea { width: 100%; padding: 0.75rem; border: 1px solid var(--color-neutral-gray); border-radius: 4px; font-family: var(--font-family-base); font-size: var(--font-size-base); }
+        .form-group input:focus, .form-group textarea:focus { 
+            outline: none; 
+            border-color: var(--color-primary); 
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+        }
+        .feedback-message { display: none; }
+        .is-invalid { 
+            border-color: var(--color-danger, #dc3545) !important;
+        }
+        .invalid-feedback {
+            color: var(--color-danger, #dc3545);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        
+        .hero {
+            background-color: var(--color-primary-light, #cfe2ff);
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: var(--font-size-xxxl, 2.5rem);
+            margin-bottom: 1rem;
+            color: var(--text-color-primary);
+        }
+        
+        .hero p {
+            font-size: var(--font-size-lg, 1.25rem);
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: var(--text-color-secondary);
+        }
+        
+        footer { 
+            text-align: center; 
+            padding: 2rem; 
+            background-color: var(--color-neutral-gray); 
+            color: var(--text-color-on-dark); 
+            margin-top: 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-color-on-dark);
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Alert styling */
+        .alert {
+            position: relative;
+            padding-right: 2.5rem; /* Make space for the close button */
+        }
+        
+        .alert-close {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: 0 0.5rem;
+            color: inherit;
+            opacity: 0.7;
+        }
+        
+        .alert-close:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="index.html" class="logo">Cream Design System</a>
+            <div class="dropdown-wrapper">
+                <button class="btn btn-outline" id="toggle-menu" aria-haspopup="true" aria-expanded="false" aria-controls="docs-menu">Documentação ▼</button>
+                <div class="dropdown-menu" id="docs-menu" role="menu" aria-labelledby="toggle-menu">
+                    <a href="../design-system/docs/index.html" role="menuitem">Guia de Uso</a>
+                    <a href="#" id="components-link" role="menuitem">Componentes</a>
+                    <a href="#" id="tokens-link" role="menuitem">Tokens</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="index.html" aria-label="Página Principal">Home</a></li>
+                <li><a href="about.html" aria-label="Sobre Nós">Sobre</a></li>
+                <li><a href="contact.html" class="active" aria-label="Página de Contato">Contato</a></li>
+                <li><a href="services.html" aria-label="Nossos Serviços">Serviços</a></li>
+                <li><a href="portfolio.html" aria-label="Nosso Portfólio">Portfólio</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Entre em Contato</h1>
+            <p>Use o formulário abaixo para nos enviar uma mensagem. Estamos ansiosos para ouvir você!</p>
+        </div>
+    </section>
+
+    <main class="container">
+        <div class="alert alert-info" role="status" style="margin-bottom: 1rem;" id="form-instructions">
+            <button class="alert-close" aria-label="Fechar alerta">×</button>
+            Preencha todos os campos obrigatórios marcados com *.
+        </div>
+
+        <div class="alert alert-success feedback-message" role="status" style="margin-bottom: 1rem;" id="success-message">
+            <button class="alert-close" aria-label="Fechar alerta">×</button>
+            <strong>Sucesso!</strong> Sua mensagem foi enviada. Entraremos em contato em breve.
+        </div>
+
+        <div class="alert alert-danger feedback-message" role="alert" style="margin-bottom: 1rem;" id="error-message">
+            <button class="alert-close" aria-label="Fechar alerta">×</button>
+            <strong>Erro!</strong> Ocorreu um problema ao enviar sua mensagem. Por favor, tente novamente.
+        </div>
+
+        <form id="contact-form" action="#" method="post">
+            <div class="form-group">
+                <label for="name">Nome: *</label>
+                <input type="text" id="name" name="name" required aria-describedby="name-error">
+                <div class="invalid-feedback" id="name-error">Por favor, informe seu nome.</div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email: *</label>
+                <input type="email" id="email" name="email" required aria-describedby="email-error">
+                <div class="invalid-feedback" id="email-error">Por favor, informe um email válido.</div>
+            </div>
+            <div class="form-group">
+                <label for="subject">Assunto: *</label>
+                <input type="text" id="subject" name="subject" required aria-describedby="subject-error">
+                <div class="invalid-feedback" id="subject-error">Por favor, informe o assunto da mensagem.</div>
+            </div>
+            <div class="form-group">
+                <label for="message">Mensagem: *</label>
+                <textarea id="message" name="message" rows="4" required aria-describedby="message-error"></textarea>
+                <div class="invalid-feedback" id="message-error">Por favor, escreva sua mensagem.</div>
+            </div>
+            <button type="submit" class="btn btn-primary" id="submit-btn">Enviar Mensagem</button>
+            <button type="button" class="btn btn-outline" id="reset-btn">Limpar Formulário</button>
+        </form>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#" id="terms-link">Termos de Uso</a>
+            <a href="#" id="privacy-link">Política de Privacidade</a>
+            <a href="contact.html">Contato</a>
+            <a href="../design-system/docs/index.html">Documentação</a>
+        </div>
+        <p>&copy; 2025 Cream Design System</p>
+    </footer>
+
+    <!-- Modal de confirmação -->
+    <div id="confirmation-modal" class="modal" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modalTitle" class="modal-title">Mensagem Enviada</h2>
+                    <button class="modal-close" aria-label="Fechar modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <p>Obrigado por entrar em contato conosco!</p>
+                    <p>Sua mensagem foi enviada com sucesso. Responderemos o mais breve possível.</p>
+                    <div class="alert alert-info" role="status">
+                        <strong>Informação:</strong> Verifique seu email para confirmação de recebimento.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline modal-close">Fechar</button>
+                    <a href="index.html" class="btn btn-primary">Voltar para Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal para páginas em desenvolvimento -->
+    <div id="coming-soon-modal" class="modal" role="dialog" aria-labelledby="comingSoonTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="comingSoonTitle" class="modal-title">Em Desenvolvimento</h2>
+                    <button class="modal-close" aria-label="Fechar modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <p>Esta página está em desenvolvimento e será disponibilizada em breve.</p>
+                    <p>Fique atento às nossas atualizações!</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline modal-close">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript para interatividade -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactForm = document.getElementById('contact-form');
+            const resetBtn = document.getElementById('reset-btn');
+            const formFields = contactForm.querySelectorAll('input, textarea');
+            const successMessage = document.getElementById('success-message');
+            const errorMessage = document.getElementById('error-message');
+            const formInstructions = document.getElementById('form-instructions');
+            const confirmationModal = document.getElementById('confirmation-modal');
+            const comingSoonModal = document.getElementById('coming-soon-modal');
+            const toggleMenuBtn = document.getElementById('toggle-menu');
+            const docsMenu = document.getElementById('docs-menu');
+            
+            // Close alert functionality
+            document.querySelectorAll('.alert-close').forEach(button => {
+                button.addEventListener('click', function() {
+                    this.parentElement.style.display = 'none';
+                });
+            });
+            
+            // Form validation and submission
+            contactForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                // Reset validation state
+                formFields.forEach(field => {
+                    field.classList.remove('is-invalid');
+                    field.nextElementSibling.style.display = 'none';
+                });
+                
+                // Check validation
+                let isValid = true;
+                
+                formFields.forEach(field => {
+                    if (field.hasAttribute('required') && !field.value.trim()) {
+                        field.classList.add('is-invalid');
+                        field.nextElementSibling.style.display = 'block';
+                        isValid = false;
+                    }
+                    
+                    // Email validation
+                    if (field.type === 'email' && field.value.trim()) {
+                        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!emailPattern.test(field.value)) {
+                            field.classList.add('is-invalid');
+                            field.nextElementSibling.style.display = 'block';
+                            isValid = false;
+                        }
+                    }
+                });
+                
+                if (isValid) {
+                    // Simulate form submission
+                    simulateFormSubmission();
+                }
+            });
+            
+            // Reset form
+            resetBtn.addEventListener('click', function() {
+                contactForm.reset();
+                formFields.forEach(field => {
+                    field.classList.remove('is-invalid');
+                    field.nextElementSibling.style.display = 'none';
+                });
+                formInstructions.style.display = 'block';
+                successMessage.style.display = 'none';
+                errorMessage.style.display = 'none';
+            });
+            
+            // Simulating form submission (in a real app, this would be an AJAX call)
+            function simulateFormSubmission() {
+                const submitBtn = document.getElementById('submit-btn');
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Enviando...';
+                
+                // Simulate network delay
+                setTimeout(function() {
+                    // Simulate successful submission (95% chance of success)
+                    const isSuccess = Math.random() > 0.05;
+                    
+                    if (isSuccess) {
+                        formInstructions.style.display = 'none';
+                        errorMessage.style.display = 'none';
+                        successMessage.style.display = 'block';
+                        
+                        // Show modal
+                        confirmationModal.classList.add('show');
+                        
+                        // Reset form
+                        contactForm.reset();
+                    } else {
+                        formInstructions.style.display = 'none';
+                        successMessage.style.display = 'none';
+                        errorMessage.style.display = 'block';
+                    }
+                    
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Enviar Mensagem';
+                }, 1500);
+            }
+            
+            // Modal close functionality
+            document.querySelectorAll('.modal-close').forEach(closeBtn => {
+                closeBtn.addEventListener('click', function() {
+                    const modal = this.closest('.modal');
+                    if (modal) {
+                        modal.classList.remove('show');
+                    }
+                });
+            });
+            
+            // Field validation on input
+            formFields.forEach(field => {
+                field.addEventListener('input', function() {
+                    if (field.classList.contains('is-invalid')) {
+                        field.classList.remove('is-invalid');
+                        field.nextElementSibling.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Toggle dropdown menu
+            toggleMenuBtn.addEventListener('click', function() {
+                docsMenu.classList.toggle('show');
+            });
+            
+            // Close dropdown menu if clicked outside
+            window.addEventListener('click', function(event) {
+                if (!event.target.matches('#toggle-menu')) {
+                    docsMenu.classList.remove('show');
+                }
+            });
+            
+            // Coming soon modal for unimplemented links
+            document.querySelectorAll('#services-link, #portfolio-link, #components-link, #tokens-link').forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    comingSoonModal.classList.add('show');
+                });
+            });
+            
+            // Footer links
+            document.querySelectorAll('#terms-link, #privacy-link').forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    comingSoonModal.classList.add('show');
+                });
+            });
+            
+            // Close modal when clicking outside
+            document.addEventListener('click', function(event) {
+                const modals = document.querySelectorAll('.modal.show');
+                modals.forEach(modal => {
+                    if (modal.contains(event.target)) return;
+                    if (!event.target.closest('.modal-content') && !event.target.classList.contains('modal-trigger')) {
+                        modal.classList.remove('show');
+                    }
+                });
+            });
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    const openModal = document.querySelector('.modal.show');
+                    if (openModal) {
+                        openModal.classList.remove('show');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
